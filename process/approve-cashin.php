@@ -17,7 +17,7 @@ $id = $conn->query($sql);
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>RideSharer | Membership</title>
+  <title>Journnies | Transaction Approval</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -60,11 +60,11 @@ $id = $conn->query($sql);
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Membership</h1>
+      <h1>Transaction</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="../dashboards/dashboard.php">Home</a></li>
-          <li class="breadcrumb-item active">Membership</li>
+          <li class="breadcrumb-item active">Transaction</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -164,7 +164,7 @@ $_SESSION['idApprovalStatus'] = '';
           <div class="card">
             <div class="card-body">
 
-              <h2 class="card-title ">Driver's Membership Request | <span>Subject to approval</span></h2>
+              <h2 class="card-title ">Transaction Approval Request | <span>Subject to approval</span></h2>
 
 
               

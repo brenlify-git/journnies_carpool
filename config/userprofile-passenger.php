@@ -13,7 +13,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Users / User Account</title>
+  <title>Journnies | User Account</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -53,7 +53,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-          <li class="breadcrumb-item active">User Account</li>
+          <li class="breadcrumb-item active">Profile</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->

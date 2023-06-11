@@ -88,5 +88,5 @@ if (isset($_POST['register_btn'])) {
     $mail->send();
 
     $_SESSION['status'] = "Check your Email for Verification";
-    header('Location: ' . $home . '/index.php');
+    header('Location: ' . $home . '/reg_inserts/registration-account.php');
 }

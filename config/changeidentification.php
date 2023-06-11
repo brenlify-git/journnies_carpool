@@ -7,8 +7,15 @@ $userID = $_SESSION['userID'];
 $idType = $_POST['idType'];
 $idNumber = $_POST['idNumber'];
 
-$upd3 = "UPDATE user SET uIDType= '$idType', uIDNumber = '$idNumber', uUserVerify_License = 0 WHERE uID = '$userID'";
-$result3=mysqli_query($conn, $upd3);
+if($idType == "Drivers License"){
+    $upd3 = "UPDATE user SET uIDType= '$idType', uIDNumber = '$idNumber', uUserVerify_License = 0 WHERE uID = '$userID'";
+    $result3=mysqli_query($conn, $upd3);
+    
+}else{
+    $upd3 = "UPDATE user SET uIDType= '$idType', uIDNumber = '$idNumber', uUserVerify_License = 4 WHERE uID = '$userID'";
+    $result3=mysqli_query($conn, $upd3);
+    
+}
 
 if($result3){
     $_SESSION['changeID'] = "Succesfully Changed the Identification";

@@ -9,7 +9,7 @@ include '../config/connection.php';
 <html lang="en">
 
 <head>
-	<title>RideSharer | Login</title>
+	<title>Journnies | Login</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--===============================================================================================-->

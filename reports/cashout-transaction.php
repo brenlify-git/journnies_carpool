@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 include '../config/connection.php';
 
@@ -22,20 +22,20 @@ $countAmount = mysqli_query($conn, "SELECT SUM(transAmount) AS totalAmount FROM 
 $row_countAmount = mysqli_fetch_assoc($countAmount);
 $totalAmountCount = $row_countAmount["totalAmount"];
 
-$countConFee= mysqli_query($conn, "SELECT SUM(transProFee) AS totalProFee FROM cashin_cashout
+$countProFee = mysqli_query($conn, "SELECT SUM(transProFee) AS totalProFee FROM cashin_cashout
 INNER JOIN user ON cashin_cashout.uID = user.uID
 WHERE transType = 'Cash Out'
   AND cashin_cashout.transConfirmStatus = 1
   AND DATE(transTime) = '$currentDate'");
-$row_countConFee = mysqli_fetch_assoc($countConFee);
-$totalConFee = $row_countConFee["totalProFee"];
+$row_countConFee = mysqli_fetch_assoc($countProFee);
+$totalProFee = $row_countConFee["totalProFee"];
 
 $formatted_money = number_format($totalAmountCount, 2, '.', ',');
 $amountTot = '₱' . $formatted_money;
 
 
-$formatted_money = number_format($totalConFee, 2, '.', ',');
-$conFeeTot = '₱' . $formatted_money;
+$formatted_money = number_format($totalProFee, 2, '.', ',');
+$proFeeTot = '₱' . $formatted_money;
 
 
 
@@ -49,7 +49,7 @@ $conFeeTot = '₱' . $formatted_money;
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>InFuse | Patron Masterlist</title>
+    <title>Journnies | Cash Out Report</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -59,9 +59,7 @@ $conFeeTot = '₱' . $formatted_money;
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -82,8 +80,8 @@ $conFeeTot = '₱' . $formatted_money;
 
     <!-- ======= Sidebar and Header ======= -->
 
-    <?php include '../headerbars/headerbar.php';?>
-    <?php include '../sidebars/sidebar.php';?>
+    <?php include '../headerbars/headerbar.php'; ?>
+    <?php include '../sidebars/sidebar.php'; ?>
 
     <!-- End Sidebar and Header-->
 
@@ -102,75 +100,71 @@ $conFeeTot = '₱' . $formatted_money;
         </div><!-- End Page Title -->
 
         <section class="section">
-    <div class="row">
-        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-12">
 
-            <!-- table starts here -->
+                    <!-- table starts here -->
 
-            <div class="card">
-                <div class="card-body">
-                    <form action="" method="post" enctype="multipart/form-data">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="" method="post" enctype="multipart/form-data">
 
-                        <button type="submit" name="submit" class="btn btn-primary mt-3" style="float: right;">
-                            <i class="bi bi-file-earmark-spreadsheet"></i>
-                            Export
-                        </button>
-                        <h2 class="card-title">This table displays the records of cashout transactions</h2>
+                                <button type="submit" name="submit" class="btn btn-primary mt-3" style="float: right;">
+                                    <i class="bi bi-file-earmark-spreadsheet"></i>
+                                    Export
+                                </button>
+                                <h2 class="card-title">This table displays the records of cashin transactions for the date <b><?= $currentDate ?></b> </h2>
 
+                                <div style="max-height: 400px; overflow: auto;">
+                                    <!-- Table with stripped rows -->
+                                    <table class="table table-hover datatable table-bordered text-nowrap text-center">
+                                        <thead class="table-secondary" style="position: sticky; top: 1;">
+                                            <tr>
+                                                <th scope="col" style="width: 250px;">No.</th>
+                                                <th scope="col" style="width: 250px;">Transaction ID</th>
+                                                <th scope="col" style="width: 400px;">Name</th>
+                                                <th scope="col" style="width: 250px;">Amount</th>
+                                                <th scope="col" style="width: 250px;">Conversion Fee</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $x = 1;
+                                            while ($tbl_bookinfo = mysqli_fetch_assoc($id)) :
+                                            ?>
+                                                <tr>
+                                                    <td><?= $x ?></td>
+                                                    <td><?= $tbl_bookinfo['transID']; ?></td>
+                                                    <th><?= $tbl_bookinfo['uFirstName'] . " " . $tbl_bookinfo['uLastName']; ?></th>
+                                                    <td><?= $tbl_bookinfo['transAmount']; ?></td>
+                                                    <td><?= $tbl_bookinfo['transProFee']; ?></td>
+                                                </tr>
+                                            <?php
+                                                $x++;
+                                            endwhile;
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                    <!-- End Table with stripped rows -->
+                                </div>
 
-                        <div class="overflow-auto mt-4">
-
-                            <!-- Table with stripped rows -->
-                            <table class="table table-hover datatable table-bordered text-nowrap text-center"
-                                style="height:200px; overflow:scroll;">
-                                <thead class="table-secondary" style="position:sticky; top: 1 ;">
-                                    <tr>
-                                        <th scope="col">Transaction ID</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Amount</th>
-                                        <th scope="col">Processing Fee</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                <?php
-                        while($tbl_bookinfo = mysqli_fetch_assoc($id)):   
-                      ?>
+                                <!-- Display the totals in a separate row (outside the scrollable div) -->
+                                <table class="table table-bordered text-center">
+                                    <tbody>
                                         <tr>
-                                            <td><?= $tbl_bookinfo['transID']; ?></td>
-                                            <th><?= $tbl_bookinfo['uFirstName'] . " " . $tbl_bookinfo['uLastName']; ?></th>
-                                            <td><?= $tbl_bookinfo['transAmount']; ?></td>
-                                            <td><?= $tbl_bookinfo['transProFee']; ?></td>
+                                            <td style="text-align:right; padding-right: 20px; width: 628px;"><b>Total</b></td>
+                                            <th style="width: 190px;"><?= $amountTot; ?></th>
+                                            <th style="width: 170px;"><?= $proFeeTot; ?></th>
                                         </tr>
-                                    <?php
-                                    endwhile;
-                                    ?>
+                                    </tbody>
+                                </table>
 
-                                    <!-- Display the totals in a separate row -->
-                                    <tr class="">
-                                        <td colspan="2" style="text-align: right; padding-right:20px" > <b>Total</b> </td>
-
-                                        <th><?= $amountTot; ?></th>
-                                        <th><?= $conFeeTot; ?></th>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                            <!-- End Table with stripped rows -->
-
+                            </form>
                         </div>
-
-                    </form>
-
-
+                    </div>
                 </div>
             </div>
-        </div>
-
-
-
-    </div>
-</section>
+        </section>
 
 
     </main><!-- End #main -->
@@ -180,8 +174,7 @@ $conFeeTot = '₱' . $formatted_money;
 
     </footer><!-- End Footer -->
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>

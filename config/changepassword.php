@@ -11,7 +11,7 @@ if($newPassword != $confirmPassword){
     $message = "Password mismatch!";
 }
 else{
-    $sqlUpdate = "UPDATE user SET password = '$confirmPassword' WHERE userID = '$accID'";
+    $sqlUpdate = "UPDATE user SET uPassword = '$confirmPassword' WHERE uID = '$accID'";
     $result6=mysqli_query($conn, $sqlUpdate);
 
     if($result6){
@@ -70,8 +70,8 @@ else{
 
   <!-- ======= Sidebar and Header ======= -->
 
-  <?php include_once 'headerbar-passenger.php';?>
-  <?php include 'sidebar-passenger.php'; 
+  <?php include '../headerbars/headerbar-passenger.php';?>
+  <?php include '../sidebars/sidebar-passenger.php';?>
   
   ?>
 
