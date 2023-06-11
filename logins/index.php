@@ -50,7 +50,7 @@ include '../config/connection.php';
 						Welcome back, Riders!
 
 						<span class="login100-form-subtitle">
-							Login your stupid account here.
+							Login your account or credentials.
 						</span>
 					</span>
 
