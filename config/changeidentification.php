@@ -7,8 +7,8 @@ $userID = $_SESSION['userID'];
 $idType = $_POST['idType'];
 $idNumber = $_POST['idNumber'];
 
-$upd3 = "UPDATE user SET idType= '$idType', idNumber = '$idNumber', verifyLicenseNumber = 'pending' WHERE userID = '$userID'";
-$result3=mysqli_query($conn, $upd3 );
+$upd3 = "UPDATE user SET uIDType= '$idType', uIDNumber = '$idNumber', uUserVerify_License = 0 WHERE uID = '$userID'";
+$result3=mysqli_query($conn, $upd3);
 
 if($result3){
     $_SESSION['changeID'] = "Succesfully Changed the Identification";
