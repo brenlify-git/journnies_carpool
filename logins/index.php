@@ -48,7 +48,7 @@ include '../config/connection.php';
 					<span class="login100-form-title">
 						Welcome back, Journnies!
 						<span class="login100-form-subtitle">
-							Login your credentials here.
+							Login your stupid account here.
 						</span>
 					</span>
 
