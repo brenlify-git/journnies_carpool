@@ -46,9 +46,11 @@ include '../config/connection.php';
 
 				<form class="login100-form validate-form col-md-6" method="post" action="index.php">
 					<span class="login100-form-title">
+
 						Welcome back, Journnieses!
+
 						<span class="login100-form-subtitle">
-							Login your credentials here.
+							Login your stupid account here.
 						</span>
 					</span>
 
