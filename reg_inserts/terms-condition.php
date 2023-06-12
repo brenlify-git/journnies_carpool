@@ -1,5 +1,12 @@
 <?php
 session_start();
+include '../config/connection.php';
+
+$user=$_GET['user'];
+$sql = mysqli_query($conn, "SELECT uUserVerify_Reg FROM user WHERE uEmail = '$user'");
+$result = mysqli_fetch_assoc($sql);
+$verify = $result["uUserVerify_Reg"];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,6 +60,9 @@ session_start();
 
 <body>
 
+<?php
+if($verify == 0){
+?>
     <form action="../config/verify-email.php" method="POST">
         <div class="container">
             <h1>Terms and Condition</h1>
@@ -61,7 +71,7 @@ session_start();
                     <h2 class="accordion-header" id="headingOne">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             User Account, Privacy, and Data Protection
-                            <input type="hidden" value="<?= $_GET['user'] ?>" name="user">
+                            <input type="hidden" value="<?= $user ?>" name="user">
                         </button>
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -110,7 +120,12 @@ session_start();
         </div>
     </form>
 
-
+<?php
+}else{
+    $_SESSION['messageLogin'] = "You are already Verified. Log In Now!";
+    header('Location: ' . $home . '/index.php');
+}
+?>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>

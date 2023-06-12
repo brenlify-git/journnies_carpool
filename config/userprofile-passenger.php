@@ -17,7 +17,7 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
- 
+
 
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.5.0
@@ -31,16 +31,17 @@
 
   <!-- ======= Sidebar and Header ======= -->
 
-  <?php include_once '../headerbars/headerbar-passenger.php';?>
-  <?php include '../sidebars/sidebar-passenger.php'; 
+  <?php include_once '../headerbars/headerbar-passenger.php'; ?>
+  <?php include '../sidebars/sidebar-passenger.php';
   include '../config/connection.php';
 
   $userID  = $_SESSION['userID'];
-  
+
   $sql = "SELECT * FROM user WHERE uID = '$userID'";
-  
   $id = $conn->query($sql);
-  
+ 
+
+
   ?>
 
   <!-- End Sidebar and Header-->
@@ -60,7 +61,7 @@
 
     <section class="section profile">
       <div class="row">
-       
+
 
         <div class="col-xl-8">
 
@@ -86,7 +87,7 @@
                   <!-- Change Password Form -->
                   <form action="changepassword.php" method="post">
 
-                  <div class="row mb-3">
+                    <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Account ID</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="accID" type="text" value="<?php echo $_SESSION['userID']; ?>" class="form-control" readonly id="currentPassword">
@@ -111,62 +112,72 @@
                       <button type="submit" name="submit" class="btn btn-primary">Change Password</button>
                     </div>
 
-                    
+
                   </form><!-- End Change Password Form -->
 
-                 
+
                 </div>
 
                 <div class="tab-pane fade profile-identification" id="profile-identification">
                   <!-- Change Password Form -->
                   <form action="changeidentification.php" method="post">
 
-                  <?php
-                  while($userSelect = mysqli_fetch_assoc($id)):   
+                    <?php
+                    while ($userSelect = mysqli_fetch_assoc($id)) :
 
-                    
-                ?>
 
-                  <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">ID Type</label>
-                      <div class="col-md-8 col-lg-9">
-                      <select class="form-select" aria-label="Default select example" onchange="enableIdNumber()"
-                      name="idType" required id="idType">
-                      
-                      <option value="<?= $userSelect['uIDType'];?>" selected><?= $userSelect['uIDType'];?></option>
-                      <option value="UMID">UMID</option>
-                      <option value="Drivers License">Driver's License</option>
-                      <option value="Professional Regulation Commission (PRC) ID">Professional Regulation Commission
-                        (PRC) ID</option>
-                      <option value="Passport">Passport</option>
-                      <option value="Social Security System">Social Security System</option>
-                      <option value="National ID">National ID</option>
-                      <option value="Pag-ibig ID">Pag-ibig ID</option>
-                      <option value="Postal ID">Postal ID</option>
-                      <option value="Phil-health ID">Phil-health ID</option>
-                      <option value="Government Issued ID">Government Issued ID</option>
-                    </select>                      
-                  </div>
-                    </div>
+                    ?>
 
-                    <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">ID Number</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="idNumber" type="text" value="<?= $userSelect['uIDNumber'];?>" class="form-control" required id="idNumber">
+                      <div class="row mb-3">
+                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">ID Type</label>
+                        <div class="col-md-8 col-lg-9">
+                          <select class="form-select" aria-label="Default select example" onchange="enableIdNumber()" name="idType" required id="idType">
+
+                            <option value="<?= $userSelect['uIDType']; ?>" selected><?= $userSelect['uIDType']; ?></option>
+                            <option value="UMID">UMID</option>
+                            <option value="Drivers License">Driver's License</option>
+                            <option value="Professional Regulation Commission (PRC) ID">Professional Regulation Commission
+                              (PRC) ID</option>
+                            <option value="Passport">Passport</option>
+                            <option value="Social Security System">Social Security System</option>
+                            <option value="National ID">National ID</option>
+                            <option value="Pag-ibig ID">Pag-ibig ID</option>
+                            <option value="Postal ID">Postal ID</option>
+                            <option value="Phil-health ID">Phil-health ID</option>
+                            <option value="Government Issued ID">Government Issued ID</option>
+                          </select>
+                        </div>
                       </div>
-                    </div>
+
+                      <div class="row mb-3">
+                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">ID Number</label>
+                        <div class="col-md-8 col-lg-9">
+                          <input name="idNumber" type="text" value="<?= $userSelect['uIDNumber']; ?>" class="form-control" required id="idNumber">
+                        </div>
+                      </div>
 
 
+                      <script>
+                        // function enableIdNumber() {
+                        //   var idType = document.getElementById("idType");
+                        //   var register = document.getElementById("register");
+                        //   if (idType.value == "<?= $userSelect['uIDType']; ?>") {
+                        //     register.disabled = true;
+                        //   } else {
+                        //     register.disabled = false;
+                        //   }
+                        // }
+                      </script>
                     <?php endwhile; ?>
 
                     <div class="text-center">
-                      <button type="submit" name="submit" class="btn btn-primary">Change Identification</button>
+                      <button type="submit" name="submit" id="register" class="btn btn-primary">Change Identification</button>
                     </div>
 
-                    
+
                   </form><!-- End Change Password Form -->
 
-                 
+
                 </div>
 
               </div><!-- End Bordered Tabs -->
@@ -180,7 +191,7 @@
 
   </main><!-- End #main -->
 
-  
+
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

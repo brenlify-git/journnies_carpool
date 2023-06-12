@@ -68,8 +68,8 @@ session_start();
         }
     </script>
 
-<!-- PROMO -->
-<script type="text/javascript">
+    <!-- PROMO -->
+    <script type="text/javascript">
         $(document).ready(function() {
             $('#promo').keyup(function() {
                 $.post("avail-promo.php", {
@@ -228,7 +228,7 @@ session_start();
                                         }
                                     }
                                 </script>
-
+                                <!--  -->
                                 <!-- PROMO CODE -->
                                 <h5 class="card-title" style="margin-top: 6px; margin-bottom:-10px">Referral Code</h5>
 

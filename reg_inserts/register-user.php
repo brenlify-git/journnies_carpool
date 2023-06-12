@@ -62,7 +62,8 @@ if (isset($_POST['register_btn'])) {
       </head>
       <body>
       <h1>WELCOME JOURNERS!</h1>
-      <p>Please Verify your Email by cliking the link down below</p>
+      <h3>Please Read the Terms and Condition by cliking the <b>link</b> down below</h3>
+      <p>Once you accepted the Terms and Condition, you will now be <b>verified</b> and will be receiving a promo of <b>10 Gems!</b></p>
       <a id="verify" href="' . $link . '">Click this Link!</a>
       <p>Thank You!</p>
       </body>
