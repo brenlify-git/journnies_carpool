@@ -116,29 +116,7 @@
 
                           <a href="add-seats.php?id=<?= $tbl_patrons['carID']; ?>" class="btn btn-warning" title="Register Car Seat"><i class="bi bi-ev-front"></i></a>
 
-                          <!-- Button trigger modal -->
-                          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            <i class="bi bi-x-circle"></i>
-                          </button>
-
-                          <!-- Modal -->
-                          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h1 class="modal-title fs-5" id="exampleModalLabel"><b>Cancel Confirmation</b></h1>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                  <h5>Are you sure you want to Cancel?</h5>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                  <a href="cancelroute.php?id=<?= $tbl_patrons['carID']; ?>" class="btn btn-primary" title="Cancel Route">Yes</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                         
                           </td>
 
                           <td><?= $countSeatRegistered ?></td>

@@ -22,7 +22,7 @@ VALUES ('$carID', '$startPoint', '$endPoint', '$newStartDate', '$newEndDate', '$
 $result2=mysqli_query($conn, $sqlIns2);
 
 $_SESSION['messageResult'] = "Routes created succesfully!";
-header("Location:../reg_inserts/registered-cars.php");
+header("Location:../reg_inserts/registered-routes.php");
 
 
 
