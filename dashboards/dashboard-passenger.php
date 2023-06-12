@@ -40,141 +40,149 @@ include '../config/connection.php';
   $sql = "SELECT * FROM user WHERE uID = '$idLoggedUser'";
   $idx = $conn->query($sql);
 
+  $routeSel = "SELECT * FROM route INNER JOIN car_details ON route.carID = car_details.carID";
+  $routeSelect = $conn->query($routeSel);
+
+  $selID = "SELECT * FROM user WHERE uID = $idLoggedUser";
+  $selectIDs = $conn->query($selID);
+
+
   ?>
 
-  
-    <!-- End Sidebar and Header-->
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+
+       <!-- Left side columns -->
+       <div class="col-lg-12 ">
+          <div class="row">
+
+         <h1 style="text-align:center">Welcome <b><?= $_SESSION['firstName'] ?></b>  to your dashboard!</h1> 
+
+         <?php
+
+        while($sele = mysqli_fetch_assoc($selectIDs)): 
+          $uType = $sele['uUserType'];
+        endwhile;
 
 
-    <main id="main" class="main">
+        while($userGuide = mysqli_fetch_assoc($idx)): 
+          $money = $userGuide['uGems'];
 
-      <div class="pagetitle">
-        <h1>Dashboard</h1>
-        <nav>
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard</li>
-          </ol>
-        </nav>
+          $formatted_money = number_format($money, 2, '.', ',');
+          $formatted_money_with_currency = '₱' . $formatted_money;
 
-      </div><!-- End Page Title -->
-
-      <section class="section dashboard">
-        <div class="row">
-
-          <!-- Left side columns -->
-          <div class="col-lg-12 ">
-            <div class="row">
-
-              <h1 style="text-align:center">Welcome <b><?= $_SESSION['firstName'] ?></b> to your dashboard!</h1>
-
-              <?php
-
-              while ($userGuide = mysqli_fetch_assoc($idx)) :
-                $money = $userGuide['uGems'];
-
-                $formatted_money = number_format($money, 2, '.', ',');
-                $formatted_money_with_currency = '₱' . $formatted_money;
+         
+         ?>
+         <h3 style="text-align:center">Your total balance: <b><?= $formatted_money_with_currency ?></b> </h3>
 
 
-              ?>
-                <h3 style="text-align:center">Your total balance: <b><?= $formatted_money_with_currency ?></b> </h3>
+         <?php
+         
+        endwhile;
+         ?>
+
+         <br> <br>
+
+         <div class="col-lg-12">
+          <div class="row mt-4">
 
 
-              <?php
+          <?php
 
-              endwhile;
-              ?>
+        
 
-              <br> <br>
+          
+            while($routeShow = mysqli_fetch_assoc($routeSelect)): 
 
-              <div class="col-lg-12">
-                <div class="row mt-4">
+              $dateTime = new DateTime($routeShow['routeDepartureTime']);
+              $formattedDateTime = $dateTime->format("F d, Y \t g:i A");
 
-                <form action="../reg_inserts/booking.php" method="POST">
+              // Starting Point
+              $text = $routeShow['routeStartingPoint'];
+              $maxCharacters = 20;
 
-                  <!-- Sales Card -->
-                  <!-- Left side columns -->
-                  <div class="col-lg-12 ">
-                    <div class="row">
-                      <br> <br>
-                      <div class="col-lg-12">
-                        <div class="row mt-4">
+              if (strlen($text) > $maxCharacters) {
+                $shortenedText = substr($text, 0, $maxCharacters) . "...";
+              } else {
+                $shortenedText = $text;
+              }
 
-                          <?php
+              //End Point
+              $text2 = $routeShow['routeEndPoint'];
+              $maxCharacters2 = 20;
 
-                          $sqlCar = "SELECT * FROM route INNER JOIN car_details ON route.carID = car_details.carID INNER JOIN user ON
-                    car_details.uID = user.uID";
-                          $resultCar = $conn->query($sqlCar);
+              if (strlen($text2) > $maxCharacters2) {
+                $shortenedText2 = substr($text2, 0, $maxCharacters2) . "...";
+              } else {
+                $shortenedText2 = $text2;
+              }
 
-                          ?>
+              if ($uType == 'Passenger'){
+          ?>
 
+        
+              
+         <!-- Sales Card -->
+         <div class="col-xxl-4 col-md-12">
+         <form action="../reg_inserts/booking.php" method="POST">
+              <div class="card info-card sales-card">
+                <div class="card-body">
+                  <h5 class="card-title">Book Now <span>| <?= $formattedDateTime ?></span></h5>
 
-                          <!-- Sales Card -->
-                          <?php
-                          $x = 1;
-                          while ($row = mysqli_fetch_assoc($resultCar)) :
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-car-front-fill" style="color: #16a085;"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6> <?= $routeShow['carType'] ?> </h6>
+                      <span class="text-success small pt-1 fw-bold">From: </span> <span
+                        class="text-muted small pt-2 ps-1"><?= $shortenedText ?></span> <br>
+                        <span class="text-success small pt-1 fw-bold">To: </span> <span
+                        class="text-muted small pt-2 ps-1"><?= $shortenedText2 ?></span>
+                        <div class="text-center mt-3">
+                          <input type="hidden" name="router" value="<?= $routeShow['routeID'] ?>">
+                  <button type="submit" class="btn col-md-12" style="background-color: #16a085; color:white">Book
+                   </button>
+                </div>
+                    </div>
 
-                            $dateTime = new DateTime($row['routeDepartureTime']);
-                            $formattedDateTime = $dateTime->format("F d, Y \t g:i A");
-
-                            // Starting Point
-                            $text = $row['routeStartingPoint'];
-                            $maxCharacters = 30;
-
-                            if (strlen($text) > $maxCharacters) {
-                              $shortenedText = substr($text, 0, $maxCharacters) . "...";
-                            } else {
-                              $shortenedText = $text;
-                            }
-
-                            //End Point
-                            $text2 = $row['routeEndPoint'];
-                            $maxCharacters2 = 30;
-
-                            if (strlen($text2) > $maxCharacters2) {
-                              $shortenedText2 = substr($text2, 0, $maxCharacters2) . "...";
-                            } else {
-                              $shortenedText2 = $text2;
-                            }
-                          ?>
-                            <div class="col-xxl-4 col-md-12">
-                              <div class="card info-card sales-card">
-                                <div class="card-body">
-                                  <h5 class="card-title">Book <span>| <?= $formattedDateTime ?></span></h5>
-                                  <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                      <i class="bi bi-ev-front-fill"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                      <h6> <?= $row['carType'] ?> </h6>
-                                      <span><b>Starting Point:</b> <?= $shortenedText ?></span>
-                                      <span><b>End Point:</b> <?= $shortenedText2 ?></span><br> <br>
-                                      <input type="hidden" name="user" value="<?= $row['uID'] ?>">
-                                      <input type="text" name="router" value="<?= $row['routeID']?>">
-                                      <span class="text-success small pt-1 fw-bold"><button type="submit" class="btn btn-primary" id="accept-button" name="accept">See More</button></span>
-                                      
-                                    </div>
-                                  </div>
-                                </div>
-
-                              </div>
-                            </div><!-- End Sales Card -->
-                          <?php
-                            $x++;
-                          endwhile;
-                          ?>
-                        </div>
-                      </div>
-                    </div><!-- End Right side columns -->
+                
+                    
                   </div>
                 </div>
-                </form>
-              </div><!-- End Right side columns -->
-            </div>
-      </section>
 
-    </main><!-- End #main -->
+              </div>
+              </form>
+            </div><!-- End Sales Card -->
+
+           
+
+            <?php
+              }
+          endwhile;?>
+
+         
+          </div>
+            </div>
+        </div><!-- End Right side columns -->
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
   
 
 
