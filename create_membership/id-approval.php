@@ -4,7 +4,7 @@ include '../config/connection.php';
 
 
 
-$sql = "SELECT * FROM user WHERE uUserVerify_License = 'Pending ID' OR uUserVerify_License = 'Pending Driver ID' OR uUserVerify_License = 'Pending Passenger Upd ID'";
+$sql = "SELECT * FROM user WHERE uUserVerify_License = 'Pending ID'";
 
 
 $id = $conn->query($sql);

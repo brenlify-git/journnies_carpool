@@ -72,7 +72,7 @@
         $row_countNotif4 = mysqli_fetch_assoc($countNotif4);
         $checkID4 = $row_countNotif4["verifyReg"];
 
-            if ($checkID == "Drivers License" && $checkID3 == "Driver ID" && $checkID2 == "Driver" || $checkID3 == "Pending Passenger Upd ID") {
+            if ($checkID2 == "Driver") {
 
             ?>
 
@@ -83,41 +83,6 @@
                     </a>
                 </li>
 
-
-
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="../reg_inserts/registered-cars.php">
-                        <i class="bi bi-car-front-fill"></i>
-
-                        <span>Registered Cars</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="../trans_model/cashout.php">
-                        <i class="bi bi-cash-coin"></i>
-
-                        <span>Cash Out Funds</span>
-                    </a>
-                </li>
-
-
-
-            <?php
-            }
-
-            ?>
-            <?php
-            if ($checkID3 == "Update ID") {
-
-            ?>
-
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="../reg_inserts/register-car.php">
-                        <i class="bi bi-people"></i>
-                        <span>Car Registration</span>
-                    </a>
-                </li>
 
 
                 <li class="nav-item">

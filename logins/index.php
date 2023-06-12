@@ -77,7 +77,10 @@ include '../config/connection.php';
 					
 					if(isset($_SESSION['messageLogin'])){
 						echo $_SESSION['messageLogin'];
+						unset($_SESSION['messageLogin']);
 					}
+
+					
 				
 			
 					?>
@@ -92,7 +95,7 @@ include '../config/connection.php';
 						</button>
 					</div>
 					<div class="text-center p-t-12">
-						<a href="../reg_inserts/registration-account.php">
+						<a href="../reg_inserts/registration-account.php" style="text-decoration: none;">
 						<span>
 							Doesn't have an account?
 						</span>
@@ -166,9 +169,7 @@ include '../config/connection.php';
 	}
 ?>
 
-	</div>
-	</div>
-	</div>
+
 
 
 

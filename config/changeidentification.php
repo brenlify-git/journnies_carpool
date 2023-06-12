@@ -7,21 +7,21 @@ $userID = $_SESSION['userID'];
 $idType = $_POST['idType'];
 $idNumber = $_POST['idNumber'];
 
-if($idType == "Drivers License"){
-    $upd3 = "UPDATE user SET uIDType= '$idType', uIDNumber = '$idNumber', uUserVerify_License = 'Pending Driver ID' WHERE uID = '$userID'";
-    $result3=mysqli_query($conn, $upd3);
-    
-}else{
-    $upd3 = "UPDATE user SET uIDType= '$idType', uIDNumber = '$idNumber', uUserVerify_License = 'Pending Passenger Upd ID' WHERE uID = '$userID'";
-    $result3=mysqli_query($conn, $upd3);
-    
-}
+$sql = "SELECT * FROM user WHERE uID=$userID";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
 
-if($result3){
+$userType = $row['uUserType'];
+
+$upd3 = "UPDATE user SET uIDType= '$idType', uIDNumber = '$idNumber', uUserVerify_License = 'Pending ID' WHERE uID = '$userID'";
+$result3 = mysqli_query($conn, $upd3);
+
+
+
+
+if ($result3) {
     $_SESSION['changeID'] = "Succesfully Changed the Identification";
     header("Location:userprofile-passenger.php");
-}else{
+} else {
     die(mysqli_error($conn));
 }
-
-?>
