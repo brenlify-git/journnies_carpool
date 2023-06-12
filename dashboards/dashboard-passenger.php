@@ -39,9 +39,12 @@ include '../config/connection.php';
 
   $sql = "SELECT * FROM user WHERE uID = '$idLoggedUser'";
   $idx = $conn->query($sql);
-  
+
   $routeSel = "SELECT * FROM route INNER JOIN car_details ON route.carID = car_details.carID WHERE routeStatus = 'available'";
   $routeSelect = $conn->query($routeSel);
+
+  $bookSel = "SELECT * FROM booking INNER JOIN user ON booking.uID = user.uID INNER JOIN car_seat ON booking.seatID = car_seat.seatID WHERE bookDriverVerify = 'pending'";
+  $bookSelect = $conn->query($bookSel);
 
   $selID = "SELECT * FROM user WHERE uID = $idLoggedUser";
   $selectIDs = $conn->query($selID);
@@ -101,10 +104,6 @@ include '../config/connection.php';
 
 
           <?php
-
-        
-
-          
             while($routeShow = mysqli_fetch_assoc($routeSelect)): 
 
               $dateTime = new DateTime($routeShow['routeDepartureTime']);
@@ -158,9 +157,6 @@ include '../config/connection.php';
                    </button>
                 </div>
                     </div>
-
-                
-                    
                   </div>
                 </div>
 
@@ -172,7 +168,120 @@ include '../config/connection.php';
 
             <?php
               }
-          endwhile;?>
+          endwhile;
+          ?>
+
+          <?php
+            while($routeShow = mysqli_fetch_assoc($routeSelect)): 
+
+              $dateTime = new DateTime($routeShow['routeDepartureTime']);
+              $formattedDateTime = $dateTime->format("F d, Y \t g:i A");
+
+              // Starting Point
+              $text = $routeShow['routeStartingPoint'];
+              $maxCharacters = 20;
+
+              if (strlen($text) > $maxCharacters) {
+                $shortenedText = substr($text, 0, $maxCharacters) . "...";
+              } else {
+                $shortenedText = $text;
+              }
+
+              //End Point
+              $text2 = $routeShow['routeEndPoint'];
+              $maxCharacters2 = 20;
+
+              if (strlen($text2) > $maxCharacters2) {
+                $shortenedText2 = substr($text2, 0, $maxCharacters2) . "...";
+              } else {
+                $shortenedText2 = $text2;
+              }
+
+              if ($uType == 'Passenger'){
+          ?>
+
+        
+              
+         <!-- Sales Card -->
+         <div class="col-xxl-4 col-md-12">
+         <form action="../reg_inserts/booking.php" method="POST">
+              <div class="card info-card sales-card">
+                <div class="card-body">
+                  <h5 class="card-title">Book Now <span>| <?= $formattedDateTime ?></span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-car-front-fill" style="color: #16a085;"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6> <?= $routeShow['carType'] ?> </h6>
+                      <span class="text-success small pt-1 fw-bold">From: </span> <span
+                        class="text-muted small pt-2 ps-1"><?= $shortenedText ?></span> <br>
+                        <span class="text-success small pt-1 fw-bold">To: </span> <span
+                        class="text-muted small pt-2 ps-1"><?= $shortenedText2 ?></span>
+                        <div class="text-center mt-3">
+                          <input type="hidden" name="router" value="<?= $routeShow['routeID'] ?>">
+                  <button type="submit" class="btn col-md-12" style="background-color: #16a085; color:white">Book
+                   </button>
+                </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              </form>
+            </div><!-- End Sales Card -->
+
+           
+
+            <?php
+              }
+
+          endwhile;
+
+          while($bookSelectShow = mysqli_fetch_assoc($bookSelect)): 
+          if ($uType == 'Driver'){
+
+
+            
+          ?>
+
+              
+         <!-- Sales Card -->
+         <div class="col-xxl-4 col-md-12">
+         <form action="../process/accept-booking.php" method="POST">
+              <div class="card info-card sales-card">
+                <div class="card-body">
+                  <h5 class="card-title">Accept Now <span>| Carpool Booking</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-car-front-fill" style="color: #16a085;"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6> <?= $bookSelectShow['seatTypeAvailable']  ?> </h6>
+                      <span class="text-success small pt-1 fw-bold">Passenger: </span> <span
+                        class="text-muted small pt-2 ps-1"><?= $bookSelectShow['uFirstName'] ?> <?= $bookSelectShow['uLastName'] ?></span> <br>
+                       
+                        <div class="text-center mt-3">
+                          <input type="hidden" name="bookID" value="<?= $bookSelectShow['bookID'] ?>">
+                  <button type="submit" class="btn col-md-12" style="background-color: #16a085; color:white">Accept Booking
+                   </button>
+                </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              </form>
+
+
+
+<?php 
+
+} 
+endwhile;
+?>
 
          
           </div>

@@ -2,13 +2,14 @@
 
  include '../config/connection.php';
  $routerSet = $_POST['router'];
+ 
 
 
  $sql = "SELECT * FROM route INNER JOIN car_details ON route.carID = car_details.carID INNER JOIN user ON car_details.uID = user.uID WHERE routeID = '$routerSet' AND routeStatus = 'available'";
  $idx = $conn->query($sql);
 
 
-$sql4 = "SELECT * FROM route INNER JOIN car_seat ON route.carID = car_seat.carID WHERE routeID = '$routerSet'";
+$sql4 = "SELECT * FROM route INNER JOIN car_seat ON route.carID = car_seat.carID WHERE routeID = '$routerSet' AND car_seat.seatStatus = 'available' OR car_seat.seatStatus = 'pending'";
 $idx4 = $conn->query($sql4);
 
  $sql2 = "SELECT * FROM route INNER JOIN car_details ON route.carID = car_details.carID INNER JOIN car_seat ON car_details.carID = car_seat.carID WHERE seatStatus = 'available' AND car_seat.carID = '4'";
@@ -51,7 +52,9 @@ $idx4 = $conn->query($sql4);
 <body>
     <!-- ======= Sidebar and Header ======= -->
     <?php include '../headerbars/headerbar-passenger.php';?>
-    <?php include '../sidebars/sidebar-passenger.php';?>
+    <?php include '../sidebars/sidebar-passenger.php';
+     $userIDPassenger = $_SESSION['userID'];
+    ?>
 
     <!-- End Sidebar and Header-->
 
@@ -150,7 +153,7 @@ $idx4 = $conn->query($sql4);
                             <h5 class="card-title"></h5>
 
                             <!-- Multi Columns Form -->
-                            <form class="row g-3" action="register-car_complete.php" method="post">
+                            <form class="row g-3" action="../process/book-passenger-process.php" method="post">
 
                                 
 
@@ -159,11 +162,17 @@ $idx4 = $conn->query($sql4);
                                         <span class="require">*</span></label>
                                     <div class="col-sm-12">
                                         <select class="form-select" aria-label="Default select example"
-                                            name="carFuelType" id="department" required>
+                                            name="seatID" id="department" required>
                                             <?php
-                                                 while($sele45 = mysqli_fetch_assoc($idx4)):      
+                                                 while($sele45 = mysqli_fetch_assoc($idx4)):  
+                                                    
+                                                    $amount = $sele45['convenienceFee'];
+                                                    $percentage = 0.1;
+
+                                                    $tenPercent = $amount * $percentage;
+                                                    $tenPercent += $amount;
                                             ?>
-                                            <option value="<?= $sele45['seatID'] ?>"><?= $sele45['seatTypeAvailable'] ?></option>
+                                            <option value="<?= $sele45['seatID'] ?>"><?= $sele45['seatTypeAvailable'] ?> --  <?= $tenPercent ?> gems</option>
                                             <?php
                                             endwhile;
                                             ?>
@@ -174,7 +183,7 @@ $idx4 = $conn->query($sql4);
                                 <div class="col-md-4">
                                     <label for="inputPassword5" class="form-label">What do you wear? <span
                                             class="require">*</span></label>
-                                    <input type="text" class="form-control" id="inputPassword5" placeholder="Blue Shirt and Black Slacks" name="fieldOffice"
+                                    <input type="text" class="form-control" id="inputPassword5" placeholder="Blue Shirt and Black Slacks" name="passengerIdentification"
                                         value="" required></input>
                                 </div>
 
@@ -183,7 +192,7 @@ $idx4 = $conn->query($sql4);
                                         <span class="require">*</span></label>
                                     <div class="col-sm-12">
                                         <select class="form-select" aria-label="Default select example"
-                                            name="carFuelType" id="department" required>
+                                            name="pronouns" id="department" required>
                                             <option value="He/Him">He/Him</option>
                                             <option value="She/Her">She/Her</option>
                                             <option value="They/Them">They/Them</option>
@@ -194,6 +203,9 @@ $idx4 = $conn->query($sql4);
                                     </div>
                                 </div>
 
+                                <input type="hidden" name="routeID" value="<?= $routerSet ?>">
+                                <input type="hidden" name="passengerID" value="<?= $userIDPassenger ?>">
+                                <input type="hidden" name="convFee" value="<?= $tenPercent ?>">
 
 
                                 <div class="text-center" style="margin-top: 30px;">

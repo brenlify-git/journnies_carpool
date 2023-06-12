@@ -35,7 +35,7 @@ if(!isset($_SESSION['passenger_email']) && $_SESSION['Patron_Type'] != 'Driver')
 <div class="d-flex align-items-center justify-content-between">
   <a href="../dashboards/dashboard.php" class="logo d-flex align-items-center">
     <img src="../assets/img/Logo Only.png" alt="">
-    <span class="d-none d-lg-block">Rideshare Carpool</span>
+    <span class="d-none d-lg-block">Journnies</span>
   </a>
   <i class="bi bi-list toggle-sidebar-btn"></i>
 </div><!-- End Logo -->
