@@ -110,7 +110,7 @@ $id = $conn->query($sql);
                                             $txtConFee = $_POST['conFee'];
                                             $carID = $_GET['id'];
 
-                                            foreach ($carID as $key => $value){
+                                            foreach ($txtSeatType as $key => $value){
                                                 $save = "INSERT INTO car_seat (carID, seatTypeAvailable, convenienceFee) VALUES ('$carID','$txtSeatType[$key]', '$txtConFee[$key]')";
                                                 $query = mysqli_query($conn, $save);
                                             }
@@ -214,7 +214,7 @@ $id = $conn->query($sql);
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
 
- 
+
 
 </body>
 
