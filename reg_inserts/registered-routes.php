@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title> Journnies | Registered Cars</title>
+    <title> Journnies | Registered Routes</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -23,11 +23,23 @@
     <!-- End Sidebar and Header-->
 
     <?php
+    //ROUTING DATE
+    $sqlRoute = "SELECT * FROM route";
+    $routing = $conn->query($sqlRoute);
+    $row = $routing->fetch_assoc();
+
+    date_default_timezone_set('Asia/Manila');
+    $currentDateTime = date('Y-m-d H:i');
+
+    //UPDATE ROUTE STATUS
+    $sqlUpdate = "UPDATE route SET routeStatus = 'cancelled' WHERE routeArrivalTime = '$currentDateTime'";
+    $result4 = mysqli_query($conn, $sqlUpdate);
+
+
     $idset = $_SESSION['userID'];
 
     $sql = "SELECT * FROM car_details INNER JOIN route ON car_details.carID = route.carID WHERE uID = '$idset' AND car_verify=1 AND routeStatus='available' ORDER BY routeID ASC";
     $id = $conn->query($sql);
-
 
 
     ?>
@@ -86,30 +98,31 @@
                                         while ($tbl_patrons = mysqli_fetch_assoc($id)) :
                                             $idUsedforCar = $tbl_patrons['carID'];
 
+
                                             $dateTime2 = new DateTime($tbl_patrons['routeDepartureTime']);
                                             $formattedDateTime2 = $dateTime2->format("F d, Y \t g:i A");
 
                                             $dateTime = new DateTime($tbl_patrons['routeArrivalTime']);
                                             $formattedDateTime = $dateTime->format("F d, Y \t g:i A");
-                              
+
                                             // Starting Point
                                             $text = $tbl_patrons['routeStartingPoint'];
                                             $maxCharacters = 20;
-                              
+
                                             if (strlen($text) > $maxCharacters) {
-                                              $shortenedText = substr($text, 0, $maxCharacters) . "...";
+                                                $shortenedText = substr($text, 0, $maxCharacters) . "...";
                                             } else {
-                                              $shortenedText = $text;
+                                                $shortenedText = $text;
                                             }
-                              
+
                                             //End Point
                                             $text2 = $tbl_patrons['routeEndPoint'];
                                             $maxCharacters2 = 20;
-                              
+
                                             if (strlen($text2) > $maxCharacters2) {
-                                              $shortenedText2 = substr($text2, 0, $maxCharacters2) . "...";
+                                                $shortenedText2 = substr($text2, 0, $maxCharacters2) . "...";
                                             } else {
-                                              $shortenedText2 = $text2;
+                                                $shortenedText2 = $text2;
                                             }
                                         ?>
                                             <form method="post" enctype="multipart/form-data">
@@ -143,10 +156,10 @@
                                                     <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-x-circle"></i></button></td>
                                                     <td><?= $shortenedText ?></td>
                                                     <td><?= $shortenedText2  ?></td>
-                                                    <td><?=  $formattedDateTime  ?></td>
-                                                    <td><?=  $formattedDateTime2 ?></td>
-                                                    <td><?= $tbl_patrons['routeKilometers']; ?></td>
-                                                    
+                                                    <td><?= $formattedDateTime2  ?></td>
+                                                    <td><?= $formattedDateTime ?></td>
+                                                    <td><?= $tbl_patrons['routeKilometers'] . " " . $currentDateTime; ?></td>
+
 
 
                                                 </tr>
