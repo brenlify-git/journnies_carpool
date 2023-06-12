@@ -64,13 +64,13 @@
             $row_countNotif3 = mysqli_fetch_assoc($countNotif3);
             $checkID3 = $row_countNotif3["verifyLN"];
 
-        $countNotif3 = mysqli_query($conn, "SELECT uUserVerify_License AS verifyLN FROM user WHERE uID = '$loggedID'");
-        $row_countNotif3 = mysqli_fetch_assoc($countNotif3);
-        $checkID3 = $row_countNotif3["verifyLN"];
+            $countNotif3 = mysqli_query($conn, "SELECT uUserVerify_License AS verifyLN FROM user WHERE uID = '$loggedID'");
+            $row_countNotif3 = mysqli_fetch_assoc($countNotif3);
+            $checkID3 = $row_countNotif3["verifyLN"];
 
-        $countNotif4 = mysqli_query($conn, "SELECT uUserVerify_Reg AS verifyReg FROM user WHERE uID = '$loggedID'");
-        $row_countNotif4 = mysqli_fetch_assoc($countNotif4);
-        $checkID4 = $row_countNotif4["verifyReg"];
+            $countNotif4 = mysqli_query($conn, "SELECT uUserVerify_Reg AS verifyReg FROM user WHERE uID = '$loggedID'");
+            $row_countNotif4 = mysqli_fetch_assoc($countNotif4);
+            $checkID4 = $row_countNotif4["verifyReg"];
 
             if ($checkID2 == "Driver") {
 
@@ -116,18 +116,6 @@
             </li>
 
 
-            <?php
-            if ($checkID4 == 1 && $checkID2 == "Passenger") {
-            ?>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="../reg_inserts/booking.php">
-                        <i class="bi bi-cash"></i>
-
-                        <span>Booking</span>
-                    </a>
-                </li>
-
-            <?php } ?>
 
 
 
