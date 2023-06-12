@@ -1,10 +1,4 @@
-<?php 
-
-include '../config/connection.php';
-
-
-?>
-
+  
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,34 +53,23 @@ $id = $conn->query($sql);
       
                 <div class="card"> 
                   <div class="card-body">
-                  <!-- <form action="process.php" method="post" enctype="multipart/form-data"> -->
-
-                  <button type="submit" name="submit" class="btn btn-primary mt-3" style="float: right;">
-                    <i class="bi bi-file-earmark-spreadsheet"></i>
-                    Export
-                    </button>
                     <h2 class="card-title ">Sorted according to the cars that are accepted by the admins</h2>
-
-
                     <div class="overflow-auto mt-4">
-
                     <!-- Table with stripped rows -->
-                    <table class="table table-hover datatable table-bordered text-nowrap text-center" style="max-height: 600px; overflow: auto; display: inline-block;">
+                    <table class="table table-hover table-bordered text-nowrap text-center" style="max-height: 600px; overflow: auto; display: inline-block;">
                       <thead class="table-secondary" style="position:sticky; top: 0 ;">
                         <tr>
-                        <th scope="col">Route</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Car Color</th>
-                        <th scope="col">Car Model</th>
-                        <th scope="col">Car Type</th>
-                        <th scope="col">Manufacturer</th>
-                        <th scope="col">Engine Number</th>
-                        <th scope="col">Chasis Number</th>
-                        <th scope="col">Year Manufactured</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Fuel Type</th>
-                        <th scope="col">Plate Number</th>
-                        
+                          <th scope="col">Car ID</th>
+                          <th scope="col">Car Color</th>
+                          <th scope="col">Car Model</th>
+                          <th scope="col">Car Type</th>
+                          <th scope="col">Manufacturer</th>
+                          <th scope="col">Year Manufactured</th>
+                          <th scope="col">Category</th>
+                          <th scope="col">Fuel Type</th>
+                          <th scope="col">Plate Number</th>
+                          <th scope="col">Route</th>
+                          <th scope="col">Status</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -94,23 +77,28 @@ $id = $conn->query($sql);
                       <?php
                         while($tbl_patrons = mysqli_fetch_assoc($id)):   
                       ?>
-                        <tr>
+                      <form action="add-route.php" method="post" enctype="multipart/form-data">
+
+                        <tr class="text-center">
                       
-                        <td><button class="btn btn-primary" title="Create Route"><i class="bi bi-ev-front"></i></button></td>
-                        <td><button class="btn btn-success" title="Status">Accepted</button></td>
+                        
+                        <input type="hidden" name="carID" value="<?=$tbl_patrons['carID'];?>">
+                        <input type="hidden" name="plateNumber" value="<?=$tbl_patrons['carPlateNumber'];?>">
+
+                        <td><?= $tbl_patrons['carID'];?></td>
                         <td><?= $tbl_patrons['carColor'];?></td>
                         <td><?= $tbl_patrons['carModel'];?></td>
                         <td><?= $tbl_patrons['carType'];?></td>
                         <td><?= $tbl_patrons['carManufacturer'];?></td>
-                        <td><?= $tbl_patrons['carEngineNo'];?></td>
-                        <td><?= $tbl_patrons['carChasis'];?></td>
                         <td><?= $tbl_patrons['carYearManufactured'];?></td>
                         <td><?= $tbl_patrons['carCategory'];?></td>
                         <td><?= $tbl_patrons['carFuelType'];?></td>
                         <td><?= $tbl_patrons['carPlateNumber'];?></td>
-                        
+                        <td><button class="btn btn-primary" type="submit" title="Create Route"><i class="bi bi-ev-front"></i></button></td>
+                        <td><span class="badge text-bg-success">Accepted</span></td>
                         
                         </tr>
+                        </form>
 
                         <?php
                 endwhile;
@@ -120,7 +108,7 @@ $id = $conn->query($sql);
                     </table>
                     <!-- End Table with stripped rows -->
 
-              <!-- </form> -->
+              
               </div>
             </div>
           </div>
