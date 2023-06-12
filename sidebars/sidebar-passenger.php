@@ -101,7 +101,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="../reg_inserts/registered-routes.php">
+                        <i class="bi bi-r-circle"></i>
 
+                        <span>Registered Routes</span>
+                    </a>
+                </li>
 
             <?php
             }
