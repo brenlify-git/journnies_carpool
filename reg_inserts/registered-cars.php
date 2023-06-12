@@ -39,7 +39,7 @@ $id = $conn->query($sql);
       <h1>Registered Cars</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+          <li class="breadcrumb-item"><a href="../dashboards/dashboard-passenger.php">Home</a></li>
           <li class="breadcrumb-item active">Registered Cars</li>
         </ol>
       </nav>
@@ -56,7 +56,7 @@ $id = $conn->query($sql);
                     <h2 class="card-title ">Sorted according to the cars that are accepted by the admins</h2>
                     <div class="overflow-auto mt-4">
                     <!-- Table with stripped rows -->
-                    <table class="table table-hover table-bordered text-nowrap text-center" style="max-height: 600px; overflow: auto; display: inline-block;">
+                    <table class="table table-hover table-bordered text-nowrap text-center" style="max-height: 600px;">
                       <thead class="table-secondary" style="position:sticky; top: 0 ;">
                         <tr>
                           <th scope="col">Route</th>
@@ -91,20 +91,44 @@ $id = $conn->query($sql);
                         
                         <input type="hidden" name="carID" value="<?=$tbl_patrons['carID'];?>">
                         <input type="hidden" name="plateNumber" value="<?=$tbl_patrons['carPlateNumber'];?>">
-                       
-                        
+
                           <?php
                           if ($countSeatRegistered == 0){
-                              echo ' <td><span class="badge text-bg-danger">Seat Required</span></td>';
+                              echo '<td><span class="badge text-bg-danger">Seat Required</span></td>';
                               echo '<td><button type="submit" disabled class="btn btn-primary" title="You need to register a car seat first."><i class="bi bi-ev-front"></i></button>';
                           }
 
                           else {
-                            echo ' <td><span class="badge text-bg-success">Able to Create</span></td>';
+                            echo '<td><span class="badge text-bg-success">Able to Create</span></td>';
                             echo '<td><button type="submit" class="btn btn-primary" title="Create Route"><i class="bi bi-ev-front"></i></button>';
                           }
                           ?>
+
                           <a href="add-seats.php?id=<?= $tbl_patrons['carID'];?>" class="btn btn-warning" title="Register Car Seat"><i class="bi bi-ev-front"></i></a>
+
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Launch demo modal
+                          </button>
+
+                          <!-- Modal -->
+                          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  ...
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </td>
                         
                         <td><?= $countSeatRegistered ?></td>

@@ -3,10 +3,7 @@
  include '../config/connection.php';
 
 
- $carID = $_GET['id'];
 
- $sql = "SELECT * FROM car_seat WHERE carID = '$carID'";
-$id = $conn->query($sql);
 
 ?>
 <!DOCTYPE html>
@@ -67,7 +64,21 @@ $id = $conn->query($sql);
 <body>
     <!-- ======= Sidebar and Header ======= -->
     <?php include '../headerbars/headerbar-passenger.php';?>
-    <?php include '../sidebars/sidebar-passenger.php';?>
+    <?php include '../sidebars/sidebar-passenger.php';
+    
+    if(isset($_SESSION['carIDUsed'])){
+        $carID = $_SESSION['carIDUsed'];
+        unset($_SESSION['carIDUsed']);
+    }
+    else{
+        $carID = $_GET['id'];
+        unset($_SESSION['carIDUsed']);
+    }
+    $sql = "SELECT * FROM car_seat WHERE carID = '$carID'";
+    $id = $conn->query($sql);
+    
+    
+    ?>
 
     <!-- End Sidebar and Header-->
 
@@ -91,7 +102,7 @@ $id = $conn->query($sql);
 
                     <div class="card">
                         <div class="card-body">
-                            <form class="insert-form" id="insert_form" method="post">
+                            <form class="insert-form" id="insert_form" action="../process/seat-process.php" method="post">
                                 <h2 class="card-title">You are adding a car seat for car <b><?=$carID?></b></h2>
                                 <div class="input-field">
                                    <table class="table table-bordered text-center" id="table_field">
@@ -101,24 +112,7 @@ $id = $conn->query($sql);
                                             <th>Action</th>
                                         </tr>
 
-                                        <?php
-
-                                        include '../config/connection.php';
-
-                                        if (isset($_POST['save'])){
-                                            $txtSeatType = $_POST['seatType'];
-                                            $txtConFee = $_POST['conFee'];
-                                            $carID = $_GET['id'];
-
-                                            foreach ($txtSeatType as $key => $value){
-                                                $save = "INSERT INTO car_seat (carID, seatTypeAvailable, convenienceFee) VALUES ('$carID','$txtSeatType[$key]', '$txtConFee[$key]')";
-                                                $query = mysqli_query($conn, $save);
-                                            }
-
-                                            
-
-                                        }
-                                        ?>
+                                       <input type="hidden" name="carID" value="<?= $carID ?>">
                                         <tr>
                                             <td>
                                                 <div class="col-md-12">
@@ -153,7 +147,7 @@ $id = $conn->query($sql);
       
                 <div class="card"> 
                   <div class="card-body">
-                    <h2 class="card-title ">Sorted according to the cars that are accepted by the admins</h2>
+                    <h2 class="card-title ">All the car seat that is registered to car with an ID <b><?= $carID ?></b></h2>
                     <div class="overflow-auto mt-4">
                     <!-- Table with stripped rows -->
                     <table class="table table-hover table-bordered text-nowrap text-center" style="max-height: 600px;">
@@ -177,11 +171,17 @@ $id = $conn->query($sql);
 
                         <tr class="text-center">
                       
+                        <?php
 
+                            $dateTime = new DateTime($tbl_patrons['seatRegTime']);
+
+                            $formattedDateTime = $dateTime->format("F d, Y \t g:i A");
+
+                        ?>
                         <td>SEAT00-<?= $i ?></td>
                         <td><?= $tbl_patrons['seatTypeAvailable'];?></td>
-                        <td><?= $tbl_patrons['convenienceFee'];?></td>
-                        <td><?= $tbl_patrons['seatRegTime'];?></td>
+                        <td><?= $tbl_patrons['convenienceFee'];?> gems</td>
+                        <td><?= $formattedDateTime ?></td>
                         </tr>
                         </form>
 

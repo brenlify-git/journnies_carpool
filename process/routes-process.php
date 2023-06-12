@@ -12,8 +12,8 @@ $arriveTime = $_POST['arriveTime'];
 $kilometer = $_POST['kilometer'];
 
 
-$newStartDate = $dateSet.'_'.$deptTime;
-$newEndDate = $dateSet.'_'.$arriveTime;
+$newStartDate = $dateSet.' '.$deptTime;
+$newEndDate = $dateSet.' '.$arriveTime;
 
 
 
