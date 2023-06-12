@@ -67,7 +67,6 @@
         $row_countNotif4 = mysqli_fetch_assoc($countNotif4);
         $checkID4 = $row_countNotif4["verifyReg"];
         
-            if($checkID == "Drivers License" && $checkID3 == 1 && $checkID2 == "Driver"){
 
 
 
@@ -121,7 +120,6 @@
                         <span>Car Registration</span>
                     </a>
                 </li>
-
 
 
                 <li class="nav-item">

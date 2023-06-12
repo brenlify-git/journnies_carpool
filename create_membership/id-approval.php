@@ -3,7 +3,7 @@
 include '../config/connection.php';
 
 
-$sql = "SELECT * FROM user WHERE uUserVerify_License = 0 OR uUserVerify_License = 4";
+$sql = "SELECT * FROM user WHERE uUserVerify_License = 0";
 
 $id = $conn->query($sql);
 

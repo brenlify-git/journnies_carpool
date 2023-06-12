@@ -1,5 +1,3 @@
-  
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,6 +57,8 @@ $id = $conn->query($sql);
                     <table class="table table-hover table-bordered text-nowrap text-center" style="max-height: 600px; overflow: auto; display: inline-block;">
                       <thead class="table-secondary" style="position:sticky; top: 0 ;">
                         <tr>
+                          <th scope="col">Status</th>
+                          <th scope="col">Route</th>
                           <th scope="col">Car ID</th>
                           <th scope="col">Car Color</th>
                           <th scope="col">Car Model</th>
@@ -68,8 +68,7 @@ $id = $conn->query($sql);
                           <th scope="col">Category</th>
                           <th scope="col">Fuel Type</th>
                           <th scope="col">Plate Number</th>
-                          <th scope="col">Route</th>
-                          <th scope="col">Status</th>
+                        
                         </tr>
                       </thead>
                       <tbody>
@@ -84,6 +83,11 @@ $id = $conn->query($sql);
                         
                         <input type="hidden" name="carID" value="<?=$tbl_patrons['carID'];?>">
                         <input type="hidden" name="plateNumber" value="<?=$tbl_patrons['carPlateNumber'];?>">
+                        <td><span class="badge text-bg-success">Accepted</span></td>
+                        <td>
+                          <button type="submit" class="btn btn-primary" title="Create Route"><i class="bi bi-ev-front"></i></button>
+                          <a href="add-seats.php?id=<?= $tbl_patrons['carID'];?>" class="btn btn-primary" title="Create Route"><i class="bi bi-ev-front"></i></a>
+                        </td>
 
                         <td><?= $tbl_patrons['carID'];?></td>
                         <td><?= $tbl_patrons['carColor'];?></td>
@@ -94,9 +98,8 @@ $id = $conn->query($sql);
                         <td><?= $tbl_patrons['carCategory'];?></td>
                         <td><?= $tbl_patrons['carFuelType'];?></td>
                         <td><?= $tbl_patrons['carPlateNumber'];?></td>
-                        <td><button class="btn btn-primary" type="submit" title="Create Route"><i class="bi bi-ev-front"></i></button></td>
-                        <td><span class="badge text-bg-success">Accepted</span></td>
                         
+                      
                         </tr>
                         </form>
 
