@@ -8,11 +8,11 @@ $idType = $_POST['idType'];
 $idNumber = $_POST['idNumber'];
 
 if($idType == "Drivers License"){
-    $upd3 = "UPDATE user SET uIDType= '$idType', uIDNumber = '$idNumber', uUserVerify_License = 0 WHERE uID = '$userID'";
+    $upd3 = "UPDATE user SET uIDType= '$idType', uIDNumber = '$idNumber', uUserVerify_License = 'Pending Driver ID' WHERE uID = '$userID'";
     $result3=mysqli_query($conn, $upd3);
     
 }else{
-    $upd3 = "UPDATE user SET uIDType= '$idType', uIDNumber = '$idNumber', uUserVerify_License = 4 WHERE uID = '$userID'";
+    $upd3 = "UPDATE user SET uIDType= '$idType', uIDNumber = '$idNumber', uUserVerify_License = 'Pending Passenger Upd ID' WHERE uID = '$userID'";
     $result3=mysqli_query($conn, $upd3);
     
 }
