@@ -64,22 +64,10 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Car Details</h5>
-
-              <?php 
-                  if(($_SESSION['messageResult']) != ""){?>
-
-              <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <?php echo $_SESSION['messageResult']?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-
-              <?php
-                  $_SESSION['messageResult'] = "";
-                  }
-              ?>
+              
 
               <!-- Multi Columns Form -->
-              <form class="row g-3" action="add-seats.php" method="post">
+              <form class="row g-3" action="confirm-details.php" method="post">
 
                 <div class="col-md-6">
                   <label for="inputPassword5" class="form-label">Car ID <span
@@ -90,11 +78,9 @@
                 <div class="col-md-6">
                   <label for="inputPassword5" class="form-label">Plate Number <span class="require">*</span></label>
                   <input type="text" class="form-control" id="inputPassword5" name="plateNumber" style="cursor:not-allowed" value="<?=$_POST['plateNumber']?>" min="1" required readonly>
-                  
                 </div>
 
                 <h5 class="card-title">Routes Details</h5>
-
                 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlLD_QkZd5kw0AqsMygwrxQyxsipt1isY&libraries=places"></script>
                 <script>
                     function initialize() {
@@ -186,8 +172,8 @@
                   <button type="reset" class="btn btn-primary col-md-3"><i class="bi bi-x-circle"></i>
                     Clear</button>
                 </div>
-              </form><!-- End Multi Columns Form -->
 
+              </form><!-- End Multi Columns Form -->
             </div>
           </div>
 

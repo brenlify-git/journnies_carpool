@@ -2,6 +2,9 @@
 
  include '../config/connection.php';
 
+
+ $carID = $_GET['id'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +27,7 @@
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
 
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha512-U6K1YLIFUWcvuw5ucmMtT9HH4t0uz3M366qrF5y4vnyH6dgDzndlcGvH/Lz5k8NFh80SN95aJ5rqGZEdaQZ7ZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <style>
         .require {
@@ -32,6 +35,29 @@
           
         }
     </style>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var html = '<tr><td><div class="col-md-12"><input type="text" class="form-control text-center" name="seatType[]" required></div></td><td><div class="col-md-12"><input type="text" class="form-control text-center" name="conFee[]" required></div></td><td><div class="col-md-12"><input type="button" class="btn btn-danger form-control" id="remove" name="remove" value="Remove" required></div></td></tr>';
+        
+        var max = 12;
+        var x=1;
+
+        $("#add1").click(function(){
+            if (x <= max) {
+                $("#table_field").append(html);
+                x++;
+            }
+        });
+
+
+        $("#table_field").on('click','#remove',function(){
+            $(this).closest('tr').remove();
+            x--;
+        });
+    });
+</script>
 
 </head>
 
@@ -62,109 +88,56 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <form action="" method="post" enctype="multipart/form-data">
-
-                                <h2 class="card-title">Your route summary, kindly check that</h2>
-
-                                <div style="max-height: 400px; overflow: auto;">
-                                    <!-- Table with stripped rows -->
-                                    <table class="table table-hover datatable table-bordered text-nowrap">
+                            <form class="insert-form" id="insert_form" method="post">
+                                <h2 class="card-title">Your route summary, kindly check that <?=$carID?></h2>
+                                <div class="input-field">
+                                   <table class="table table-bordered text-center" id="table_field">
                                         <tr>
-                                            <th scope="col" style="width: 250px;">Car ID</th>
-                                            <td scope="col" style="width: 400px;"><?= $_POST['carID'];?></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col" style="width: 250px;">Starting Point </th>
-                                            <td scope="col" style="width: 400px;"><?= $_POST['startingPoint'];?></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col" style="width: 250px;">Destination Point </th>
-                                            <td scope="col" style="width: 400px;"><?= $_POST['destinationPoint'];?></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col" style="width: 250px;">Date</th>
-                                            <td scope="col" style="width: 400px;"><?= $_POST['dateSet'];?></td>
-                                        </tr>
-
-                                        <tr>
-                                            <th scope="col" style="width: 250px;">Departure Time </th>
-                                            <td scope="col" style="width: 400px;"><?= $_POST['departureTime'];?></td>
-                                        </tr>
-
-                                        <tr>
-                                            <th scope="col" style="width: 250px;">Arrival Time </th>
-                                            <td scope="col" style="width: 400px;"><?= $_POST['arrivalTime'];?></td>
+                                            <th>Seat Type Location</th>
+                                            <th>Convenience Fee</th>
+                                            <th>Action</th>
                                         </tr>
 
                                         <?php
 
-                                        function getDistance($addressFrom, $addressTo, $unit = ''){
-                                            // Google API key
-                                            $apiKey = 'AIzaSyDlLD_QkZd5kw0AqsMygwrxQyxsipt1isY';
-                                            
-                                            // Change address format
-                                            $formattedAddrFrom    = str_replace(' ', '+', $addressFrom);
-                                            $formattedAddrTo     = str_replace(' ', '+', $addressTo);
-                                            
-                                            // Geocoding API request with start address
-                                            $geocodeFrom = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.$formattedAddrFrom.'&sensor=false&key='.$apiKey);
-                                            $outputFrom = json_decode($geocodeFrom);
-                                            if(!empty($outputFrom->error_message)){
-                                                return $outputFrom->error_message;
-                                            }
-                                            
-                                            // Geocoding API request with end address
-                                            $geocodeTo = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.$formattedAddrTo.'&sensor=false&key='.$apiKey);
-                                            $outputTo = json_decode($geocodeTo);
-                                            if(!empty($outputTo->error_message)){
-                                                return $outputTo->error_message;
-                                            }
-                                            
-                                            // Get latitude and longitude from the geodata
-                                            $latitudeFrom    = $outputFrom->results[0]->geometry->location->lat;
-                                            $longitudeFrom    = $outputFrom->results[0]->geometry->location->lng;
-                                            $latitudeTo        = $outputTo->results[0]->geometry->location->lat;
-                                            $longitudeTo    = $outputTo->results[0]->geometry->location->lng;
-                                            
-                                            // Calculate distance between latitude and longitude
-                                            $theta    = $longitudeFrom - $longitudeTo;
-                                            $dist    = sin(deg2rad($latitudeFrom)) * sin(deg2rad($latitudeTo)) +  cos(deg2rad($latitudeFrom)) * cos(deg2rad($latitudeTo)) * cos(deg2rad($theta));
-                                            $dist    = acos($dist);
-                                            $dist    = rad2deg($dist);
-                                            $miles    = $dist * 60 * 1.1515;
-                                            
-                                            // Convert unit and return distance
-                                            $unit = strtoupper($unit);
-                                            if($unit == "K"){
-                                                return round($miles * 1.609344, 2).' km';
-                                            }elseif($unit == "M"){
-                                                return round($miles * 1609.344, 2).' meters';
-                                            }else{
-                                                return round($miles, 2).' miles';
+                                        include '../config/connection.php';
+
+                                        if (isset($_POST['save'])){
+                                            $txtSeatType = $_POST['seatType'];
+                                            $txtConFee = $_POST['conFee'];
+                                            $carID = $_GET['id'];
+
+                                            foreach ($txtSeatType as $key => $value){
+                                                $save = "INSERT INTO car_seat (carID, seatTypeAvailable, convenienceFee) VALUES ('$carID','$txtSeatType[$key]', '$txtConFee[$key]')";
+                                                $query = mysqli_query($conn, $save);
                                             }
                                         }
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <div class="col-md-12">
+                                                    <input type="text" class="form-control text-center" name="seatType[]" required>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="col-md-12">
+                                                    <input type="text" class="form-control text-center" name="conFee[]" required>
+                                                </div>
+                                            </td>
 
-                                        $addressFrom = $_POST['startingPoint'];
-                                        $addressTo = $_POST['destinationPoint'];
+                                            <td>
+                                                <div class="col-md-12">
+                                                    <input type="button" class="btn btn-warning form-control" id="add1" name="add1" value="Add" required>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                   </table>
 
-                                        $distance = getDistance($addressFrom, $addressTo, "K");
-
-                                        $kiloValue = $_SESSION['kilometerCalc'] = $distance;
-                                    ?>
-
-
-
-                                    </table>
-                                    <!-- End Table with stripped rows -->
-
-                                    <div class="col-md-6">
-                                        <label for="inputPassword5" class="form-label">Kilometer</label>
-                                        <input type="text" style="height: 60px; font-size:40px"
-                                            class="form-control text-center bg-success text-light" id="deptTime"
-                                            name="kilometer" value="<?= $kiloValue ?>" required>
-                                    </div>
+                                   <center>
+                                   <input type="submit" class="btn btn-success" id="save" name="save" value="Save Seats" required>
+                                   </center>
+                                    
                                 </div>
-
                             </form>
                         </div>
                     </div>

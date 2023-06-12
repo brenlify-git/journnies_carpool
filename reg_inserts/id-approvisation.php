@@ -17,13 +17,9 @@ if(isset($_POST['accept'])){
         $result4 =mysqli_query($conn, $upd4);
     }
 
-
     $_SESSION['idApprovalStatus'] = "ID Changed Request Succesful!";
     header("Location:../create_membership/id-approval.php");
 
-        
-    
-    
 }
 else if(isset($_POST['decline'])){
     $userIDLogged = $_POST['userID'];
