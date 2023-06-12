@@ -35,7 +35,7 @@ if (isset($_POST['register_btn'])) {
 
     if ($result->num_rows > 0) {
         $_SESSION['status'] = "Email Already Exist!";
-        header('Location:' . $home . '/registration-account.php');
+        header('Location:' . $home . 'reg_inserts/registration-account.php');
         return;
     }
 
@@ -50,11 +50,10 @@ if (isset($_POST['register_btn'])) {
     $row = $result->fetch_assoc();
     $userID = $row['uID'];
 
-  
     //Mailing Message
     $name = $firstName . " " . $lastName;
     $subject = "Let's be Verified! " . $name;
-    $link = $home . "/config/verify-email.php?user=" . $email . "";
+    $link = $home . "/reg_inserts/terms-condition.php?user=" . $email . "";
     $message = '
       <!DOCTYPE html>
       <html lang="en">

@@ -10,10 +10,10 @@ if(isset($_POST['accept'])){
     $userIDLogged = $_POST['userID'];
 
     if($idType == "Drivers License"){
-        $upd4 = "UPDATE user SET uUserVerify_License='1', uUserType='Driver' WHERE uID = '$userIDLogged'";
+        $upd4 = "UPDATE user SET uUserVerify_License='Driver ID', uUserType='Driver' WHERE uID = '$userIDLogged'";
         $result4 =mysqli_query($conn, $upd4);
     }else{
-        $upd4 = "UPDATE user SET uUserVerify_License='0', uUserType='Passenger' WHERE uID = '$userIDLogged'";
+        $upd4 = "UPDATE user SET uUserVerify_License='Passenger ID', uUserType='Passenger' WHERE uID = '$userIDLogged'";
         $result4 =mysqli_query($conn, $upd4);
     }
 

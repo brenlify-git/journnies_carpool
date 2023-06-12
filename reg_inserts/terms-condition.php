@@ -52,44 +52,65 @@ session_start();
 </head>
 
 <body>
-    <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Accordion Item #1
-                </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+
+    <form action="../config/verify-email.php" method="POST">
+        <div class="container">
+            <h1>Terms and Condition</h1>
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            User Account, Privacy, and Data Protection
+                            <input type="hidden" value="<?= $_GET['user'] ?>" name="user">
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>1.1</strong> By using the Journnies Carpooling Application, you agree to provide accurate, current, and complete information during the registration process. It is essential to provide truthful details such as your name, contact information, and any other required information to create and maintain your user account.<br>
+                            <strong>1.2</strong> As a user, you are responsible for maintaining the confidentiality of your account credentials, including your username and password. You are fully responsible for all activities that occur under your account. It is essential to keep your login credentials secure and not share them with anyone else. If you suspect any unauthorized use of your account, you must immediately notify Journnies Carpooling Application.<br>
+                            <strong>1.3</strong> Journnies Carpooling Application values your privacy and is committed to protecting your personal data. The application will collect, store, and process your personal information in accordance with applicable privacy laws and regulations. By using the application, you consent to the collection, storage, and processing of your personal data as described in the Privacy Policy.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Journnies Services
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>2.1</strong> The Journnies Carpooling Application provides a platform to facilitate carpooling services, connecting users who offer rides with those seeking rides. However, the application does not guarantee the availability, suitability, or safety of any users or vehicles. Users are solely responsible for evaluating and assessing the suitability, reliability, and safety of any ride offers or requests. <br>
+                            <strong>2.2</strong> Journnies Carpooling Application does not endorse or take responsibility for any malicious intent, fraudulent activities, or misconduct by users. It is the users' responsibility to exercise caution and use their best judgment when interacting with other users. If you encounter any suspicious or harmful activities, it is advised to report them to the application for further investigation.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            User Responsibilities
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>3.1</strong> By using the Journnies Carpooling Application, users agree to comply with the Terms and Conditions set forth by the application. It is essential to read and understand these terms before using the platform.<br>
+                            <strong>3.2</strong> Users agree not to engage in any fraudulent, misleading, harmful, or illegal activities while using the Journnies Carpooling Application. This includes but is not limited to misrepresenting information, posting false ride offers or requests, harassing or harming other users, or violating any applicable laws or regulations.
+                        </div>
+                    </div>
+                </div>
+                <br>
+                These Terms and Conditions govern your use of the Journnies Carpooling Application. By accessing or using the application, you agree to be bound by these terms. It is important to review the Terms and Conditions periodically, as they may be updated or modified by the application at any time. If you do not agree to these terms, you should not use the Journnies Carpooling Application.
+                <br>
+                <!-- Button -->
+                <div class="text-center buttonsResponse">
+                    <button type="submit" class="btn btn-primary" id="accept-button" name="accept">Accept</button>
+                    <button type="submit" class="btn btn-success" name="decline">Decline</button>
                 </div>
             </div>
         </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Accordion Item #2
-                </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Accordion Item #3
-                </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                </div>
-            </div>
-        </div>
-    </div>
+    </form>
+
+
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>

@@ -1,5 +1,5 @@
 <?php
-echo "hello";
+
 session_start();
 include '../config/connection.php';
 
@@ -16,9 +16,9 @@ function generateRandomString($length = 5)
 
 $randomString = generateRandomString();
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
-    $email = $_GET['user'];
+if (isset($_POST['accept'])) {
+    $email = $_POST['user'];
+    echo $email;
 
     // Checking of Verification Email
     $sql = "SELECT * FROM user WHERE uEmail='$email'";
@@ -27,9 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $row = $result->fetch_assoc();
     $promoCode = $row['uUsername'] . $randomString;
     $promo = $row['uReferred'];
-   
+
     if ($row['uUserVerify_Reg'] == 1) {
-        $_SESSION['status'] = "Email has already been verified!";
+        $_SESSION['messageLogin'] = "Email has already been verified!";
         header('Location: ' . $home . '/index.php');
         return;
     }
@@ -42,14 +42,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $update_promo = "UPDATE user SET uGems=uGems+10 WHERE uPromoCode = '$promo'";
         $result = $conn->query($update_promo);
 
-        $_SESSION['status'] = "Your email is now verified! You may now login to your account.";
+        $_SESSION['messageLogin'] = "Your email is now verified! You may now login to your account.";
         header('Location: ' . $home . '/index.php');
     } else {
         //UPDATE WHEN THERE IS REFERRAL CODE
         $update_query = "UPDATE user SET uUserVerify_Reg='1', uGems=10, uPromoCode='$promoCode' WHERE uEmail = '$email'";
         $result = $conn->query($update_query);
 
-        $_SESSION['status'] = "Your email is now verified! You may now login to your account.";
+        $_SESSION['messageLogin'] = "Your email is now verified! You may now login to your account.";
         header('Location: ' . $home . '/index.php');
     }
+} else if (isset($_POST['decline'])) {
+    $_SESSION['messageLogin'] = "Your email is now verified! You may now login to your account.";
+    header('Location: ' . $home . '/index.php');
 }
