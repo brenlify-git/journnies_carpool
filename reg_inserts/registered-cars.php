@@ -28,6 +28,8 @@ $idset = $_SESSION['userID'];
 $sql = "SELECT * FROM car_details WHERE uID = '$idset' AND car_verify=1";
 $id = $conn->query($sql);
 
+
+
   ?>
 
 
@@ -57,8 +59,9 @@ $id = $conn->query($sql);
                     <table class="table table-hover table-bordered text-nowrap text-center" style="max-height: 600px; overflow: auto; display: inline-block;">
                       <thead class="table-secondary" style="position:sticky; top: 0 ;">
                         <tr>
-                          <th scope="col">Status</th>
                           <th scope="col">Route</th>
+                          <th scope="col">Action</th>
+                          <th scope="col">Seat</th>
                           <th scope="col">Car ID</th>
                           <th scope="col">Car Color</th>
                           <th scope="col">Car Model</th>
@@ -74,7 +77,12 @@ $id = $conn->query($sql);
                       <tbody>
 
                       <?php
-                        while($tbl_patrons = mysqli_fetch_assoc($id)):   
+                        while($tbl_patrons = mysqli_fetch_assoc($id)): 
+                          $idUsedforCar = $tbl_patrons['carID'];
+                          
+                          $countSeatReg = mysqli_query($conn, "SELECT COUNT(*) AS countRegistered FROM car_seat WHERE carID = '$idUsedforCar' ");
+                          $row_countSeatReg = mysqli_fetch_assoc($countSeatReg);
+                          $countSeatRegistered = $row_countSeatReg["countRegistered"];
                       ?>
                       <form action="add-route.php" method="post" enctype="multipart/form-data">
 
@@ -83,12 +91,23 @@ $id = $conn->query($sql);
                         
                         <input type="hidden" name="carID" value="<?=$tbl_patrons['carID'];?>">
                         <input type="hidden" name="plateNumber" value="<?=$tbl_patrons['carPlateNumber'];?>">
-                        <td><span class="badge text-bg-success">Accepted</span></td>
-                        <td>
-                          <button type="submit" class="btn btn-primary" title="Create Route"><i class="bi bi-ev-front"></i></button>
-                          <a href="add-seats.php?id=<?= $tbl_patrons['carID'];?>" class="btn btn-primary" title="Create Route"><i class="bi bi-ev-front"></i></a>
-                        </td>
+                       
+                        
+                          <?php
+                          if ($countSeatRegistered == 0){
+                              echo ' <td><span class="badge text-bg-danger">Seat Required</span></td>';
+                              echo '<td><button type="submit" disabled class="btn btn-primary" title="You need to register a car seat first."><i class="bi bi-ev-front"></i></button>';
+                          }
 
+                          else {
+                            echo ' <td><span class="badge text-bg-success">Able to Create</span></td>';
+                            echo '<td><button type="submit" class="btn btn-primary" title="Create Route"><i class="bi bi-ev-front"></i></button>';
+                          }
+                          ?>
+                          <a href="add-seats.php?id=<?= $tbl_patrons['carID'];?>" class="btn btn-warning" title="Register Car Seat"><i class="bi bi-ev-front"></i></a>
+                        </td>
+                        
+                        <td><?= $countSeatRegistered ?></td>
                         <td><?= $tbl_patrons['carID'];?></td>
                         <td><?= $tbl_patrons['carColor'];?></td>
                         <td><?= $tbl_patrons['carModel'];?></td>

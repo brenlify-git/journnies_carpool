@@ -73,7 +73,7 @@ include '../config/connection.php';
   $countAmount = mysqli_query($conn, "SELECT SUM(transAmount) AS totalAmount FROM cashin_cashout
         INNER JOIN user ON cashin_cashout.uID = user.uID
         WHERE transType = 'Cash In'
-          AND cashin_cashout.transConfirmStatus = 1");
+          AND user.uID = $usersID AND cashin_cashout.transConfirmStatus = 1");
   $row_countAmount = mysqli_fetch_assoc($countAmount);
   $totalAmountCount = $row_countAmount["totalAmount"];
 

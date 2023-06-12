@@ -5,6 +5,9 @@
 
  $carID = $_GET['id'];
 
+ $sql = "SELECT * FROM car_seat WHERE carID = '$carID'";
+$id = $conn->query($sql);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +42,7 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        var html = '<tr><td><div class="col-md-12"><input type="text" class="form-control text-center" name="seatType[]" required></div></td><td><div class="col-md-12"><input type="text" class="form-control text-center" name="conFee[]" required></div></td><td><div class="col-md-12"><input type="button" class="btn btn-danger form-control" id="remove" name="remove" value="Remove" required></div></td></tr>';
+        var html = '<tr><td><div class="col-md-12"><input type="text" class="form-control text-center" name="seatType[]" required></div></td><td><div class="col-md-12"><input type="number" step="any" class="form-control text-center" name="conFee[]" required></div></td><td><div class="col-md-12"><input type="button" class="btn btn-danger form-control" id="remove" name="remove" value="Remove" required></div></td></tr>';
         
         var max = 12;
         var x=1;
@@ -71,7 +74,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Add Route Details</h1>
+            <h1>Add Seat Details</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="../dashboards/dashboard-passenger.php">Home</a></li>
@@ -89,7 +92,7 @@
                     <div class="card">
                         <div class="card-body">
                             <form class="insert-form" id="insert_form" method="post">
-                                <h2 class="card-title">Your route summary, kindly check that <?=$carID?></h2>
+                                <h2 class="card-title">You are adding a car seat for car <b><?=$carID?></b></h2>
                                 <div class="input-field">
                                    <table class="table table-bordered text-center" id="table_field">
                                         <tr>
@@ -107,10 +110,13 @@
                                             $txtConFee = $_POST['conFee'];
                                             $carID = $_GET['id'];
 
-                                            foreach ($txtSeatType as $key => $value){
+                                            foreach ($carID as $key => $value){
                                                 $save = "INSERT INTO car_seat (carID, seatTypeAvailable, convenienceFee) VALUES ('$carID','$txtSeatType[$key]', '$txtConFee[$key]')";
                                                 $query = mysqli_query($conn, $save);
                                             }
+
+                                            
+
                                         }
                                         ?>
                                         <tr>
@@ -121,7 +127,7 @@
                                             </td>
                                             <td>
                                                 <div class="col-md-12">
-                                                    <input type="text" class="form-control text-center" name="conFee[]" required>
+                                                    <input type="number" class="form-control text-center" name="conFee[]" step="any" required>
                                                 </div>
                                             </td>
 
@@ -141,6 +147,56 @@
                             </form>
                         </div>
                     </div>
+
+
+                     <!-- table starts here -->
+      
+                <div class="card"> 
+                  <div class="card-body">
+                    <h2 class="card-title ">Sorted according to the cars that are accepted by the admins</h2>
+                    <div class="overflow-auto mt-4">
+                    <!-- Table with stripped rows -->
+                    <table class="table table-hover table-bordered text-nowrap text-center" style="max-height: 600px;">
+                      <thead class="table-secondary" style="position:sticky; top: 0 ;">
+                        <tr>
+                          <th scope="col">Seat ID</th>
+                          <th scope="col">Seat Type</th>
+                          <th scope="col">Convenience Fee</th>
+                          <th scope="col">Registration Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                      <?php
+                        $i = 0;
+                        while($tbl_patrons = mysqli_fetch_assoc($id)): 
+                            
+                            $i++;
+                      ?>
+                      <form action="add-route.php" method="post" enctype="multipart/form-data">
+
+                        <tr class="text-center">
+                      
+
+                        <td>SEAT00-<?= $i ?></td>
+                        <td><?= $tbl_patrons['seatTypeAvailable'];?></td>
+                        <td><?= $tbl_patrons['convenienceFee'];?></td>
+                        <td><?= $tbl_patrons['seatRegTime'];?></td>
+                        </tr>
+                        </form>
+
+                        <?php
+                endwhile;
+                ?>
+                      
+                      </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+              
+              </div>
+            </div>
+          </div>
 
 
 
