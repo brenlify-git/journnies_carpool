@@ -54,9 +54,6 @@ include '../config/connection.php';
 						</span>
 					</span>
 
-					
-					
-
 					<div class="wrap-input100 validate-input" data-validate="Email is required">
 						<input class="input100 uname" type="text" name="Username" placeholder="Email">
 						<span class="focus-input100"></span>
