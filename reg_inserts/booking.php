@@ -4,7 +4,7 @@
  $routerSet = $_POST['router'];
 
 
- $sql = "SELECT * FROM route WHERE routeID = '$routerSet' AND routeStatus = 'available'";
+ $sql = "SELECT * FROM route INNER JOIN car_details ON route.carID = car_details.carID WHERE routeID = '$routerSet' AND routeStatus = 'available'";
  $idx = $conn->query($sql);
 
 ?>
@@ -34,7 +34,7 @@
     <style>
         .require {
             color: red;
-          
+
         }
     </style>
 
@@ -67,67 +67,111 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <form action="../process/routes-process.php" method="post" enctype="multipart/form-data">
-                                <h2 class="card-title">Your route summary, kindly check that</h2>
-                                <div>
+                            <h2 class="card-title">Your route summary, kindly check that</h2>
+                            <div>
 
                                 <?php
                                     while($sele = mysqli_fetch_assoc($idx)): 
                                 ?>
-                                    <!-- Table with stripped rows -->
-                                    <table class="table table-hover datatable table-bordered text-nowrap">
-                                        <tr>
-                                            <th scope="col" style="width: 250px;">Car ID</th>
-                                            <td scope="col" style="width: 400px;"><?= $sele['carID'];?></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col" style="width: 250px;">Starting Point </th>
-                                            <td scope="col" style="width: 400px;"><?= $sele['routeStartingPoint'];?></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col" style="width: 250px;">Destination Point </th>
-                                            <td scope="col" style="width: 400px;"><?= $sele['routeEndPoint'];?></td>
-                                        </tr>
-                                      
+                                <!-- Table with stripped rows -->
+                                <table class="table table-hover datatable table-bordered text-nowrap overflow-auto">
 
-                                        <tr>
-                                            <th scope="col" style="width: 250px;">Departure Time </th>
-                                            <td scope="col" style="width: 400px;"><?= $sele['routeDepartureTime'];?></td>
-                                        </tr>
+                                    <tr>
+                                        <th scope="col" style="width: 250px;">Starting Point </th>
+                                        <td scope="col" style="width: 400px;"><?= $sele['routeStartingPoint'];?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col" style="width: 250px;">Destination Point </th>
+                                        <td scope="col" style="width: 400px;"><?= $sele['routeEndPoint'];?></td>
+                                    </tr>
 
-                                        <tr>
-                                            <th scope="col" style="width: 250px;">Arrival Time </th>
-                                            <td scope="col" style="width: 400px;"><?= $sele['routeArrivalTime'];?></td>
-                                        </tr>
 
-                                        <tr>
-                                            <th scope="col" style="width: 250px;">Kilometer</th>
-                                            <td scope="col" style="width: 400px;"><?= $sele['routeKilometers'];?></td>
-                                        </tr>
+                                    <tr>
+                                        <th scope="col" style="width: 250px;">Departure Time </th>
+                                        <td scope="col" style="width: 400px;"><?= $sele['routeDepartureTime'];?></td>
+                                    </tr>
 
-                                    </table>
-                                    <!-- End Table with stripped rows -->
+                                    <tr>
+                                        <th scope="col" style="width: 250px;">Arrival Time </th>
+                                        <td scope="col" style="width: 400px;"><?= $sele['routeArrivalTime'];?></td>
+                                    </tr>
 
-                                    <div class="text-center" style="margin-top: 30px;">
-                                    <button type="submit" class="btn btn-success col-md-3"><i class="bi bi-car-front-fill"></i>
-                                        Request for Approval
-                                    </button>
+                                    <tr>
+                                        <th scope="col" style="width: 250px;">Kilometer</th>
+                                        <td scope="col" style="width: 400px;"><?= $sele['routeKilometers'];?></td>
+                                    </tr>
 
-                                    
-                                    <?php 
+                                </table>
+                                <!-- End Table with stripped rows -->
+
+
+                                <?php 
                                          endwhile; 
                                     ?>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+
+                            <!-- Multi Columns Form -->
+                            <form class="row g-3" action="register-car_complete.php" method="post">
+
+                                <div class="col-md-4">
+                                    <label for="inputPassword5" class="form-label">Field Office <span
+                                            class="require">*</span></label>
+                                    <input type="text" class="form-control" id="inputPassword5" name="fieldOffice"
+                                        value="" required>
                                 </div>
 
-                            </form>
+                                <div class="col-md-4">
+                                    <label class="col-sm-7 form-label">Car Fuel Type <span
+                                            class="require">*</span></label>
+                                    <div class="col-sm-12">
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="carFuelType" id="department" required>
+                                            <option value="Gasoline">Gasoline</option>
+                                            <option value="Diesel">Diesel</option>
+                                            <option value="Bio-diesel">Bio-diesel</option>
+                                            <option value="Ethanol">Ethanol</option>
+                                            <option value="E85">E85</option>
+                                            <option value="Methanol">Methanol</option>
+                                            <option value="Electric">Electric</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="text-center" style="margin-top: 30px;">
+                                    <button type="submit" class="btn btn-success col-md-3"><i
+                                            class="bi bi-car-front-fill"></i>
+                                        Register</button>
+                                    <button type="reset" class="btn btn-primary col-md-3"><i class="bi bi-x-circle"></i>
+                                        Clear</button>
+                                </div>
+                            </form><!-- End Multi Columns Form -->
+
                         </div>
                     </div>
 
-
-
                 </div>
+
+
             </div>
         </section>
+
 
     </main><!-- End #main -->
 

@@ -39,8 +39,8 @@ include '../config/connection.php';
 
   $sql = "SELECT * FROM user WHERE uID = '$idLoggedUser'";
   $idx = $conn->query($sql);
-
-  $routeSel = "SELECT * FROM route INNER JOIN car_details ON route.carID = car_details.carID";
+  
+  $routeSel = "SELECT * FROM route INNER JOIN car_details ON route.carID = car_details.carID WHERE routeStatus = 'available'";
   $routeSelect = $conn->query($routeSel);
 
   $selID = "SELECT * FROM user WHERE uID = $idLoggedUser";
