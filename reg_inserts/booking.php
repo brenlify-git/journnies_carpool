@@ -4,8 +4,16 @@
  $routerSet = $_POST['router'];
 
 
- $sql = "SELECT * FROM route INNER JOIN car_details ON route.carID = car_details.carID WHERE routeID = '$routerSet' AND routeStatus = 'available'";
+ $sql = "SELECT * FROM route INNER JOIN car_details ON route.carID = car_details.carID INNER JOIN user ON car_details.uID = user.uID WHERE routeID = '$routerSet' AND routeStatus = 'available'";
  $idx = $conn->query($sql);
+
+
+$sql4 = "SELECT * FROM route INNER JOIN car_seat ON route.carID = car_seat.carID WHERE routeID = '$routerSet'";
+$idx4 = $conn->query($sql4);
+
+ $sql2 = "SELECT * FROM route INNER JOIN car_details ON route.carID = car_details.carID INNER JOIN car_seat ON car_details.carID = car_seat.carID WHERE seatStatus = 'available' AND car_seat.carID = '4'";
+ $idx2 = $conn->query($sql2);
+
 
 ?>
 <!DOCTYPE html>
@@ -67,14 +75,31 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h2 class="card-title">Your route summary, kindly check that</h2>
+                            <h2 class="card-title">Your route summary, kindly check this one. <?= $routerSet ?></h2>
                             <div>
 
                                 <?php
-                                    while($sele = mysqli_fetch_assoc($idx)): 
+                                    while($sele = mysqli_fetch_assoc($idx)):
+                                        
+                                        $dateTime = new DateTime($sele['routeDepartureTime']);
+                                        $formattedDateTime = $dateTime->format("F d, Y \t g:i A");
+
+                                        $dateTime2 = new DateTime($sele['routeArrivalTime']);
+                                        $formattedDateTime2 = $dateTime2->format("F d, Y \t g:i A");
+                                        
                                 ?>
                                 <!-- Table with stripped rows -->
                                 <table class="table table-hover datatable table-bordered text-nowrap overflow-auto">
+
+                                    <tr>
+                                        <th scope="col" style="width: 250px;">Driver's Name </th>
+                                        <td scope="col" style="width: 400px;"><?= $sele['uFirstName'] . " " . $sele['uLastName']?></td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="col" style="width: 250px;">Car Type </th>
+                                        <td scope="col" style="width: 400px;"><?= $sele['carType'];?></td>
+                                    </tr>
 
                                     <tr>
                                         <th scope="col" style="width: 250px;">Starting Point </th>
@@ -88,12 +113,12 @@
 
                                     <tr>
                                         <th scope="col" style="width: 250px;">Departure Time </th>
-                                        <td scope="col" style="width: 400px;"><?= $sele['routeDepartureTime'];?></td>
+                                        <td scope="col" style="width: 400px;"><?= $formattedDateTime?></td>
                                     </tr>
 
                                     <tr>
                                         <th scope="col" style="width: 250px;">Arrival Time </th>
-                                        <td scope="col" style="width: 400px;"><?= $sele['routeArrivalTime'];?></td>
+                                        <td scope="col" style="width: 400px;"><?= $formattedDateTime2?></td>
                                     </tr>
 
                                     <tr>
@@ -127,27 +152,44 @@
                             <!-- Multi Columns Form -->
                             <form class="row g-3" action="register-car_complete.php" method="post">
 
-                                <div class="col-md-4">
-                                    <label for="inputPassword5" class="form-label">Field Office <span
-                                            class="require">*</span></label>
-                                    <input type="text" class="form-control" id="inputPassword5" name="fieldOffice"
-                                        value="" required>
-                                </div>
+                                
 
                                 <div class="col-md-4">
-                                    <label class="col-sm-7 form-label">Car Fuel Type <span
-                                            class="require">*</span></label>
+                                    <label class="col-sm-7 form-label">Seat Type
+                                        <span class="require">*</span></label>
                                     <div class="col-sm-12">
                                         <select class="form-select" aria-label="Default select example"
                                             name="carFuelType" id="department" required>
-                                            <option value="Gasoline">Gasoline</option>
-                                            <option value="Diesel">Diesel</option>
-                                            <option value="Bio-diesel">Bio-diesel</option>
-                                            <option value="Ethanol">Ethanol</option>
-                                            <option value="E85">E85</option>
-                                            <option value="Methanol">Methanol</option>
-                                            <option value="Electric">Electric</option>
-                                            <option value="Other">Other</option>
+                                            <?php
+                                                 while($sele45 = mysqli_fetch_assoc($idx4)):      
+                                            ?>
+                                            <option value="<?= $sele45['seatID'] ?>"><?= $sele45['seatTypeAvailable'] ?></option>
+                                            <?php
+                                            endwhile;
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="inputPassword5" class="form-label">What do you wear? <span
+                                            class="require">*</span></label>
+                                    <input type="text" class="form-control" id="inputPassword5" placeholder="Blue Shirt and Black Slacks" name="fieldOffice"
+                                        value="" required></input>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="col-sm-12 form-label">How do you want us to address you?
+                                        <span class="require">*</span></label>
+                                    <div class="col-sm-12">
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="carFuelType" id="department" required>
+                                            <option value="He/Him">He/Him</option>
+                                            <option value="She/Her">She/Her</option>
+                                            <option value="They/Them">They/Them</option>
+                                            <option value="Ze/Hir">Ze/Hir</option>
+                                            <option value="Xe/Xem">Xe/Xem</option>
+                                            <option value="prefered not to say">Prefer not to say</option>
                                         </select>
                                     </div>
                                 </div>

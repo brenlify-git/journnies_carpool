@@ -25,10 +25,8 @@
   <?php
   $idset = $_SESSION['userID'];
 
-  $sql = "SELECT * FROM car_details INNER JOIN route ON car_details.carID = route.carID WHERE uID = '$idset' AND car_verify=1";
+  $sql = "SELECT * FROM car_details WHERE uID = '$idset' AND car_verify=1";
   $id = $conn->query($sql);
-
-
 
   ?>
 

@@ -25,7 +25,7 @@
     <?php
     $idset = $_SESSION['userID'];
 
-    $sql = "SELECT * FROM car_details INNER JOIN route ON car_details.carID = route.carID WHERE uID = '$idset' AND car_verify=1 AND routeStatus='available'";
+    $sql = "SELECT * FROM car_details INNER JOIN route ON car_details.carID = route.carID WHERE uID = '$idset' AND car_verify=1 AND routeStatus='available' ORDER BY routeID ASC";
     $id = $conn->query($sql);
 
 
@@ -112,7 +112,7 @@
                                               $shortenedText2 = $text2;
                                             }
                                         ?>
-                                            <form action="add-route.php" method="post" enctype="multipart/form-data">
+                                            <form method="post" enctype="multipart/form-data">
 
                                                 <tr class="text-center">
 
@@ -133,7 +133,7 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                                    <a href="cancelroute.php?id=<?= $tbl_patrons['carID']; ?>" class="btn btn-primary" title="Cancel Route">Yes</a>
+                                                                    <a href="cancelroute.php?id=<?= $tbl_patrons['routeID']; ?>" class="btn btn-primary" title="Cancel Route">Yes</a>
                                                                 </div>
                                                             </div>
                                                         </div>
