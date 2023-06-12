@@ -92,7 +92,13 @@
                         <span>Registered Cars</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="../reg_inserts/registered-routes.php">
+                        <i class="bi bi-r-circle"></i>
 
+                        <span>Registered Routes</span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="../trans_model/cashout.php">
                         <i class="bi bi-cash-coin"></i>
@@ -101,13 +107,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="../reg_inserts/registered-routes.php">
-                        <i class="bi bi-r-circle"></i>
 
-                        <span>Registered Routes</span>
-                    </a>
-                </li>
 
             <?php
             }
