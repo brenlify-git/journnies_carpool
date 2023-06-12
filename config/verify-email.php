@@ -1,4 +1,5 @@
 <?php
+echo "hello";
 session_start();
 include '../config/connection.php';
 

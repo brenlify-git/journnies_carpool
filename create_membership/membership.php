@@ -17,7 +17,7 @@ $id = $conn->query($sql);
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>RideSharer | Membership</title>
+  <title>Journnies| Car Verification</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -60,11 +60,11 @@ $id = $conn->query($sql);
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Membership</h1>
+      <h1>Car Verification</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="../dashboards/dashboard.php">Home</a></li>
-          <li class="breadcrumb-item active">Membership</li>
+          <li class="breadcrumb-item active">Car Verification</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -364,7 +364,7 @@ $_SESSION['CarRegistrationStatus'] = '';
                    
                         <td><?= $tbl_patrons['carPlateNumber'];?></td>
                         <td><?= $tbl_patrons['uStreet'];?>
-                        <td><?= $tbl_patrons['uBaranagy'];?></td>
+                        <td><?= $tbl_patrons['uBarangay'];?></td>
                         <td><?= $tbl_patrons['uCity'];?></td>
                         <td><?= $tbl_patrons['uProvince'];?> </td>
                         <td><?= $tbl_patrons['uID'];?> </td>

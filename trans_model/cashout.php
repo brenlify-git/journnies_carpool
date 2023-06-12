@@ -22,7 +22,7 @@ include '../config/connection.php';
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>InFuse | Upgrade to Driver</title>
+  <title>Journnies | Cash Out</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -60,7 +60,26 @@ include '../config/connection.php';
 <body>
   <!-- ======= Sidebar and Header ======= -->
   <?php include '../headerbars/headerbar-passenger.php';?>
-  <?php include '../sidebars/sidebar-passenger.php';?>
+  <?php include '../sidebars/sidebar-passenger.php';
+  $usersID =  $_SESSION['userID'];
+  $sql = "SELECT *
+        FROM cashin_cashout
+        INNER JOIN user ON cashin_cashout.uID = user.uID
+        WHERE transType = 'Cash Out'
+          AND user.uID = $usersID AND transConfirmStatus = 1";
+
+  $id = $conn->query($sql);
+
+  $countAmount = mysqli_query($conn, "SELECT SUM(transAmount) AS totalAmount FROM cashin_cashout
+        INNER JOIN user ON cashin_cashout.uID = user.uID
+        WHERE transType = 'Cash Out'
+          AND cashin_cashout.transConfirmStatus = 1");
+  $row_countAmount = mysqli_fetch_assoc($countAmount);
+  $totalAmountCount = $row_countAmount["totalAmount"];
+
+  $formatted_money = number_format($totalAmountCount, 2, '.', ',');
+  $amountTot = '₱' . $formatted_money;
+  ?>
 
   <!-- End Sidebar and Header-->
 
@@ -131,7 +150,7 @@ include '../config/connection.php';
                 </div>
               
                 <div class="text-center" style="margin-top: 30px;">
-                  <button type="submit" class="btn btn-success col-md-3"><i class="bi bi-car-front-fill"></i>
+                  <button type="submit" class="btn btn-success col-md-3"><i class="bi bi-cash-coin"></i>
                     Request for Approval</button>
                   <button type="reset" class="btn btn-primary col-md-3"><i class="bi bi-x-circle"></i>
                     Clear</button>
@@ -146,6 +165,74 @@ include '../config/connection.php';
 
       </div>
     </section>
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <!-- table starts here -->
+
+          <div class="card">
+            <div class="card-body">
+              <form action="" method="post" enctype="multipart/form-data">
+
+                <button type="submit" name="submit" class="btn btn-primary mt-3" style="float: right;">
+                  <i class="bi bi-file-earmark-spreadsheet"></i>
+                  Export
+                </button>
+                <h2 class="card-title">This table displays the history of your cash out transaction</h2>
+
+                <div style="max-height: 400px; overflow: auto;">
+                  <!-- Table with stripped rows -->
+                  <table class="table table-hover datatable table-bordered text-nowrap text-center">
+                    <thead class="table-secondary" style="position: sticky; top: 1;">
+                      <tr>
+                        <th scope="col" style="width: 250px;">No.</th>
+                        <th scope="col" style="width: 400px;">Name</th>
+                        <th scope="col" style="width: 250px;">Amount</th>
+                        <th scope="col" style="width: 250px;">Processing Fee</th>
+                        <th scope="col" style="width: 250px;">Gems Added</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $x = 1;
+                      while ($tbl_bookinfo = mysqli_fetch_assoc($id)) :
+                      ?>
+                        <tr>
+                          <td><?= $x ?></td>
+                          <th><?= $tbl_bookinfo['uFirstName'] . " " . $tbl_bookinfo['uLastName']; ?></th>
+                          <td><?= $tbl_bookinfo['transAmount']; ?></td>
+                          <td><?= $tbl_bookinfo['transProFee']; ?></td>
+                          <td><?= $tbl_bookinfo['transAmount'] + $tbl_bookinfo['transProFee']; ?> </td>
+                        </tr>
+                      <?php
+                        $x++;
+                      endwhile;
+                      ?>
+                    </tbody>
+                  </table>
+                  <!-- End Table with stripped rows -->
+                </div>
+
+                <!-- Display the totals in a separate row (outside the scrollable div) -->
+                <table class="table table-bordered text-center">
+                  <tbody>
+                    <tr>
+                      <td style="text-align:right; padding-right: 20px; width: 628px;"><b>Total Cash In Amount</b></td>
+                      <th style="width: 136px;"><?= $amountTot; ?></th>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
 
   </main><!-- End #main -->
 

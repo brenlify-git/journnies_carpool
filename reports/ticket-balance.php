@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 include '../config/connection.php';
 
@@ -24,7 +24,7 @@ $amountTot = '₱' . $formatted_money;
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>InFuse | Patron Masterlist</title>
+    <title>Journnies | Users Gems Report</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -34,9 +34,7 @@ $amountTot = '₱' . $formatted_money;
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -57,8 +55,8 @@ $amountTot = '₱' . $formatted_money;
 
     <!-- ======= Sidebar and Header ======= -->
 
-    <?php include '../headerbars/headerbar.php';?>
-    <?php include '../sidebars/sidebar.php';?>
+    <?php include '../headerbars/headerbar.php'; ?>
+    <?php include '../sidebars/sidebar.php'; ?>
 
     <!-- End Sidebar and Header-->
 
@@ -77,64 +75,68 @@ $amountTot = '₱' . $formatted_money;
         </div><!-- End Page Title -->
 
         <section class="section">
-    <div class="row">
-        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-12">
 
-            <!-- table starts here -->
+                    <!-- table starts here -->
 
-            <div class="card">
-                <div class="card-body">
-                    <form action="" method="post" enctype="multipart/form-data">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="" method="post" enctype="multipart/form-data">
 
-                        <button type="submit" name="submit" class="btn btn-primary mt-3" style="float: right;">
-                            <i class="bi bi-file-earmark-spreadsheet"></i>
-                            Export
-                        </button>
-                        <h2 class="card-title">This table displays the records of available user's balance</h2>
+                                <button type="submit" name="submit" class="btn btn-primary mt-3" style="float: right;">
+                                    <i class="bi bi-file-earmark-spreadsheet"></i>
+                                    Export
+                                </button>
+                                <h2 class="card-title">This table displays the records of available user's balance</h2>
 
-                        <div style="max-height: 400px; overflow: auto;">
-                            <!-- Table with stripped rows -->
-                            <table class="table table-hover datatable table-bordered text-nowrap text-center">
-                                <thead class="table-secondary" style="position: sticky; top: 1;">
-                                    <tr>
-                                        <th scope="col" style="width: 250px;">User ID</th>
-                                        <th scope="col" style="width: 400px;">Name</th>
-                                        <th scope="col" style="width: 250px;">Account Balance</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    while ($tbl_bookinfo = mysqli_fetch_assoc($id)):
-                                    ?>
+                                <div style="max-height: 400px; overflow: auto;">
+                                    <!-- Table with stripped rows -->
+                                    <table class="table table-hover datatable table-bordered text-nowrap text-center">
+                                        <thead class="table-secondary" style="position: sticky; top: 1;">
+                                            <tr>
+                                                <th scope="col" style="width: 250px;">No.</th>
+                                                <th scope="col" style="width: 250px;">User ID</th>
+                                                <th scope="col" style="width: 400px;">Name</th>
+                                                <th scope="col" style="width: 250px;">Account Balance</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $x = 1;
+                                            while ($tbl_bookinfo = mysqli_fetch_assoc($id)) :
+                                            ?>
+                                                <tr>
+                                                    <td><?= $x++ ?></td>
+                                                    <td><?= $tbl_bookinfo['uID']; ?></td>
+                                                    <th><?= $tbl_bookinfo['uFirstName'] . " " . $tbl_bookinfo['uLastName']; ?></th>
+                                                    <td><?= $tbl_bookinfo['uGems']; ?></td>
+                                                </tr>
+                                            <?php
+                                            $x++;
+                                            endwhile;
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                    <!-- End Table with stripped rows -->
+                                </div>
+
+                                <!-- Display the totals in a separate row (outside the scrollable div) -->
+                                <table class="table table-bordered text-center">
+                                    <tbody>
                                         <tr>
-                                            <td><?= $tbl_bookinfo['uID']; ?></td>
-                                            <th><?= $tbl_bookinfo['uFirstName'] . " " . $tbl_bookinfo['uLastName']; ?></th>
-                                            <td><?= $tbl_bookinfo['uGems']; ?></td>
+                                            <td style="text-align:right; padding-right: 20px; width: 628px;"><b>Total</b></td>
+                                            <th style="width: 250px;"><?= $amountTot; ?></th>
                                         </tr>
-                                    <?php
-                                    endwhile;
-                                    ?>
-                                </tbody>
-                            </table>
-                            <!-- End Table with stripped rows -->
+                                    </tbody>
+                                </table>
+
+                            </form>
                         </div>
-
-                        <!-- Display the totals in a separate row (outside the scrollable div) -->
-                        <table class="table table-bordered text-center" >
-                            <tbody>
-                                <tr>
-                                    <td style="text-align:right; padding-right: 20px; width: 628px;"><b>Total</b></td>
-                                    <th style="width: 250px;"><?= $amountTot; ?></th>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
 
 
@@ -145,8 +147,7 @@ $amountTot = '₱' . $formatted_money;
 
     </footer><!-- End Footer -->
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>

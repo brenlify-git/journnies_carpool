@@ -53,7 +53,7 @@ if (isset($_POST['register_btn'])) {
   
     //Mailing Message
     $name = $firstName . " " . $lastName;
-    $subject = "Vroom Vroom, Welcome! " . $name;
+    $subject = "Let's be Verified! " . $name;
     $link = $home . "/config/verify-email.php?user=" . $email . "";
     $message = '
       <!DOCTYPE html>
@@ -62,7 +62,7 @@ if (isset($_POST['register_btn'])) {
       <meta charset="UTF-8">
       </head>
       <body>
-      <h2>Welcome!</h2>
+      <h1>WELCOME JOURNERS!</h1>
       <p>Please Verify your Email by cliking the link down below</p>
       <a id="verify" href="' . $link . '">Click this Link!</a>
       <p>Thank You!</p>
@@ -80,7 +80,7 @@ if (isset($_POST['register_btn'])) {
     $mail->SMTPSecure = 'tls';
     $mail->Port = '587';
 
-    $mail->setFrom('carpoolapp@caryl.tech', 'Carpool App');
+    $mail->setFrom('carpoolapp@caryl.tech', 'Journnies Carpool Application');
     $mail->addAddress($email);
     $mail->isHTML(true);
     $mail->Subject = $subject;
@@ -88,5 +88,5 @@ if (isset($_POST['register_btn'])) {
     $mail->send();
 
     $_SESSION['status'] = "Check your Email for Verification";
-    header('Location: ' . $home . '/index.php');
+    header('Location: ' . $home . '/reg_inserts/registration-account.php');
 }

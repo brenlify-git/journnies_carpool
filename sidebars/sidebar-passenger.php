@@ -16,9 +16,7 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -49,17 +47,17 @@
 
 
             <?php
-        
-        $loggedID = $_SESSION['userID'];
 
-        $countNotif2 = mysqli_query($conn, "SELECT uUserType AS TypeOfUser FROM user WHERE uID = '$loggedID'");
-        $row_countNotif2 = mysqli_fetch_assoc($countNotif2);
-        $checkID2 = $row_countNotif2["TypeOfUser"];
+            $loggedID = $_SESSION['userID'];
 
-        $countNotif = mysqli_query($conn, "SELECT uIDType AS TypeOfID FROM user WHERE uID = '$loggedID'");
-        $row_countNotif = mysqli_fetch_assoc($countNotif);
-        $checkID = $row_countNotif["TypeOfID"];
-            
+            $countNotif2 = mysqli_query($conn, "SELECT uUserType AS TypeOfUser FROM user WHERE uID = '$loggedID'");
+            $row_countNotif2 = mysqli_fetch_assoc($countNotif2);
+            $checkID2 = $row_countNotif2["TypeOfUser"];
+
+
+            $countNotif = mysqli_query($conn, "SELECT uIDType AS TypeOfID FROM user WHERE uID = '$loggedID'");
+            $row_countNotif = mysqli_fetch_assoc($countNotif);
+            $checkID = $row_countNotif["TypeOfID"];
 
         $countNotif3 = mysqli_query($conn, "SELECT uUserVerify_License AS verifyLN FROM user WHERE uID = '$loggedID'");
         $row_countNotif3 = mysqli_fetch_assoc($countNotif3);
@@ -71,49 +69,91 @@
         
             if($checkID == "Drivers License" && $checkID3 == 1 && $checkID2 == "Driver"){
 
-        ?>
 
-             <li class="nav-item">
-                <a class="nav-link collapsed" href="../reg_inserts/register-car.php">
-                    <i class="bi bi-people"></i>
-                    <span>Car Registration</span>
-                </a>
-            </li>
 
-            
+            $countNotif3 = mysqli_query($conn, "SELECT uUserVerify_License AS verifyLN FROM user WHERE uID = '$loggedID'");
+            $row_countNotif3 = mysqli_fetch_assoc($countNotif3);
+            $checkID3 = $row_countNotif3["verifyLN"];
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="../reg_inserts/registered-cars.php">
-                    <i class="bi bi-car-front-fill"></i>
-          
-                    <span>Registered Cars</span>
-                </a>
-            </li>
+            if ($checkID == "Drivers License" && $checkID3 == 1 && $checkID2 == "Driver") {
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="../trans_model/cashout.php">
-                <i class="bi bi-cash-coin"></i>
-          
-                    <span>Cash Out Funds</span>
-                </a>
-            </li>
-            
+            ?>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="../reg_inserts/register-car.php">
+                        <i class="bi bi-people"></i>
+                        <span>Car Registration</span>
+                    </a>
+                </li>
+
+
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="../reg_inserts/registered-cars.php">
+                        <i class="bi bi-car-front-fill"></i>
+
+                        <span>Registered Cars</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="../trans_model/cashout.php">
+                        <i class="bi bi-cash-coin"></i>
+
+                        <span>Cash Out Funds</span>
+                    </a>
+                </li>
+
+
 
             <?php
-                }
+            }
 
-               
+            ?>
+            <?php
+            if ($checkID3 == 4) {
 
-                    ?>
+            ?>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="../reg_inserts/register-car.php">
+                        <i class="bi bi-people"></i>
+                        <span>Car Registration</span>
+                    </a>
+                </li>
 
 
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="../reg_inserts/registered-cars.php">
+                        <i class="bi bi-car-front-fill"></i>
+
+                        <span>Registered Cars</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="../trans_model/cashout.php">
+                        <i class="bi bi-cash-coin"></i>
+
+                        <span>Cash Out Funds</span>
+                    </a>
+                </li>
+
+
+
+            <?php
+            }
+
+            ?>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="../trans_model/cashin.php">
-                <i class="bi bi-cash"></i>
-          
+                    <i class="bi bi-cash"></i>
+
                     <span>Cash In Funds</span>
                 </a>
             </li>
+
 
             <?php
                  if($checkID4 == 1 && $checkID2 == "Passenger"){
@@ -131,6 +171,7 @@
 
 
 
+
             <!--
             <li class="nav-item">
                 <a class="nav-link collapsed" href="../reg_inserts/registered-cars.php">
@@ -145,7 +186,7 @@
                     <span>User Account</span>
                 </a>
             </li><!-- End Dashboard Nav -->
-           
+
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="../config/logout.php">
@@ -156,8 +197,7 @@
         </ul>
     </aside>
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>

@@ -8,7 +8,7 @@ session_start();
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Bonggang Carpool</title>
+    <title>Journnies | Registration</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -98,7 +98,7 @@ session_start();
         <div class="headerhey">
             <img src="../assets/img/rideshare.png" style="width:200px">
             <br>
-            Welcome, Ridesharers!
+            Welcome, Journers!
             <h6>Register your details here.</h6>
         </div>
     </div>
@@ -252,7 +252,7 @@ session_start();
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputAddress5" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="password" placeholder="" name="password" required>
+                                    <input type="password" class="form-control" id="password" placeholder="" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase &#013; and lowercase letter, and at least 8 or more characters" name="password" required>
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" name="register_btn" class="btn btn-primary" id="register" disabled>Register </button>
